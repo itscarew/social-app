@@ -15,7 +15,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div>
+      <div className='text-blue-300' >
         Tailwind Next JS
       </div>
     </>
