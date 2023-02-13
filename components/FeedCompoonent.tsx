@@ -1,5 +1,6 @@
 import Image from "next/image";
-
+import Input from "./Input";
+import { IoIosSend } from "react-icons/io"
 
 
 export default function FeedCard() {
@@ -26,7 +27,11 @@ export default function FeedCard() {
                 </div>
             </div>
             <div className="font-semibold text-sm mx-4 mt-2 mb-4">92,372 likes</div>
+            <div>
+                <Input icon={<IoIosSend size={"20"} className='absolute right-3' />} placeHolder="Post a comment" className="pl-3" />
+            </div>
         </div>
+
 
     )
 }

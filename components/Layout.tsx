@@ -2,8 +2,10 @@ import AppHead from '../components/Head'
 import NavBar from './Navbar'
 import HeaderNavBar from './HeaderNavBar';
 import React from "react";
+import { useRouter } from "next/router"
 
 export default function Layout({ children }: any) {
+    const router = useRouter()
     return (
         <>
             <AppHead />
@@ -17,9 +19,11 @@ export default function Layout({ children }: any) {
                     <div className='md:flex-1 w-full  py-10 bg-gray-50  leading-none'>
                         {children}
                     </div>
-                    <div className=' py-10 border-l-2 border-gray-200 px-6 md:block' style={{ width: "33rem" }}  >
-                        Mini Profile
-                    </div>
+                    {router.pathname === "/" &&
+                        <div className=' py-10 border-l-2 border-gray-200 px-6 md:block' style={{ width: "33rem" }}  >
+                            Mini Profile
+                        </div>}
+
                 </div>
             </div>
         </>
