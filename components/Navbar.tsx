@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -6,6 +6,8 @@ import Input from "./Input";
 import { AiOutlineHome, AiOutlineUser, AiOutlineNotification, AiOutlineSetting, AiOutlineLogout, AiOutlineMenu } from "react-icons/ai"
 import { BiMessageSquareAdd } from "react-icons/bi"
 import { CiSearch } from "react-icons/ci";
+import Modal from "./modal";
+import CreatePostComponent from "./CreatePostComponen";
 
 export default function NavBar() {
     const router = useRouter();
@@ -17,6 +19,11 @@ export default function NavBar() {
         { name: "Settings", icon: <AiOutlineSetting size={20} />, href: "/settings" },
     ]
 
+    const [isOpen, setIsOpen] = useState<boolean>(false)
+    const handleCreate = () => {
+        setIsOpen(true)
+    }
+
     return (
         <nav className='w-72 py-10 border-r-2 border-gray-200 px-6 hidden md:block  '>
             <div className=' text-2xl flex items-center font-medium'>  <h1 className='ml-3 font-light'> SocialApp </h1></div>
@@ -27,10 +34,13 @@ export default function NavBar() {
                 {routes.map((route, index) => {
                     return (
                         <div key={index}>
-                            <Link className={`relative flex items-center py-2 my-2 rounded-lg px-2 ${route.name === "Support" && "mt-6"}  ${router.pathname == route.href ? "" : ""} `} href={route.href}>
+                            <div className={`relative flex cursor-pointer items-center py-2 my-2 rounded-lg px-2 ${route.name === "Support" && "mt-6"} 
+                             ${router.pathname == route.href ? "bg-gray-50" : ""} hover:bg-gray-50 `}
+                                onClick={route.name === "Create" ? handleCreate : () => router.push(route.href)}
+                            >
                                 {route.icon}  <div className='ml-4 text-lg font-light  '>{route.name}  </div>
-                                {(route.name === "Notification") && <div className="absolute right-0 rounded-full h-7 w-10 ml-2 flex items-center justify-center ">10 </div>}
-                            </Link>
+                                {(route.name === "Notification") && <div className="absolute right-0 bg-red-200 rounded-full h-7 w-10 ml-2 flex items-center justify-center ">10 </div>}
+                            </div>
                         </div>)
                 })}
             </div>
@@ -50,6 +60,9 @@ export default function NavBar() {
                 </div>
             </div>
 
+            <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Create new post">
+                <CreatePostComponent />
+            </Modal>
         </nav>
     )
 }

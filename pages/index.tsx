@@ -18,10 +18,6 @@ export default function Home() {
           <FeedCard />
           <FeedCard />
         </div>
-
-
-
-
       </Layout>
     </>
   )

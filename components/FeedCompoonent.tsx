@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Input from "./Input";
 import { IoIosSend } from "react-icons/io"
+import Link from "next/link";
 
 
 export default function FeedCard() {
@@ -9,7 +10,7 @@ export default function FeedCard() {
             <div className="flex items-center px-4 py-3">
                 <Image className="h-8 w-8 rounded-full" src="/pic1.jpeg" alt="#" width={50} height={50} />
                 <div className="ml-3 ">
-                    <span className="text-sm font-semibold antialiased block leading-tight">8fact</span>
+                    <Link href={`/8fact`} className="text-sm font-semibold antialiased block leading-tight">8fact</Link>
                     <span className="text-gray-600 text-xs block">Asheville, North Carolina</span>
                 </div>
             </div>
