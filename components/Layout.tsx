@@ -4,6 +4,7 @@ import HeaderNavBar from './HeaderNavBar';
 import React from "react";
 import { useRouter } from "next/router"
 import Suggestions from './Suggestions';
+import AuthComponent from './AuthComponent';
 
 export default function Layout({ children }: any) {
     const router = useRouter()
@@ -27,6 +28,7 @@ export default function Layout({ children }: any) {
                         </div>}
 
                 </div>
+                <AuthComponent />
             </div>
         </>
     )

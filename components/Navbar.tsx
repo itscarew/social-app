@@ -8,8 +8,11 @@ import { BiMessageSquareAdd } from "react-icons/bi"
 import { CiSearch } from "react-icons/ci";
 import Modal from "./modal";
 import CreatePostComponent from "./CreatePostComponen";
+import { getAuth } from "firebase/auth";
+import { app } from "@/utils/firebaseConfig";
 
 export default function NavBar() {
+    const auth = getAuth(app);
     const router = useRouter();
     const routes = [
         { name: "Home", icon: <AiOutlineHome size={20} />, href: "/" },
@@ -23,6 +26,8 @@ export default function NavBar() {
     const handleCreate = () => {
         setIsOpen(true)
     }
+
+    const handleSignOut = () => auth.signOut();
 
     return (
         <nav className='w-72 py-10 border-r-2 border-gray-200 px-6 hidden md:block  '>
@@ -55,7 +60,7 @@ export default function NavBar() {
                         <p className="font-normal" >olivia@untitledui.com</p>
                     </Link>
                 </div>
-                <div className=" cursor-pointer" >
+                <div className=" cursor-pointer" onClick={handleSignOut} >
                     <AiOutlineLogout size={20} />
                 </div>
             </div>
