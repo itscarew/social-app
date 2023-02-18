@@ -1,7 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
 import { FcStackOfPhotos } from "react-icons/fc"
-import { HiOutlinePhoto } from "react-icons/hi2"
 import Button from "./Button";
 
 export default function CreatePostComponent({ height }: Partial<any>) {

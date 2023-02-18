@@ -1,12 +1,12 @@
 import { Dialog, Transition, } from '@headlessui/react'
 import { Fragment } from 'react'
 
-export default function Modal(props) {
+export default function Modal(props: Partial<any>) {
 
 
     return (
         <Transition appear show={props.isOpen} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={() => props.setIsOpen(false)}>
+            <Dialog as="div" className="relative z-10" onClose={props.onClose}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -16,7 +16,7 @@ export default function Modal(props) {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <div className="fixed inset-0 bg-black bg-opacity-25" />
+                    <div className="fixed inset-0 bg-black bg-opacity-50" />
                 </Transition.Child>
 
                 <div className="fixed inset-0 overflow-y-auto">
@@ -30,14 +30,15 @@ export default function Modal(props) {
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
-                                <Dialog.Title
-                                    as="h3"
-                                    className="text-lg font-medium text-center py-2 text-gray-900"
-                                >
-                                    {props.title}
-                                </Dialog.Title>
-                                <div className="overflow-y-scroll ">
+                            <Dialog.Panel className={`w-full ${props.className} transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all`}>
+                                {props.title &&
+                                    <Dialog.Title
+                                        as="h3"
+                                        className="text-lg font-medium text-center py-2 text-gray-900"
+                                    >
+                                        {props.title}
+                                    </Dialog.Title>}
+                                <div className="">
                                     {props.children}
                                 </div>
                             </Dialog.Panel>

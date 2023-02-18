@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import ExploreCard from "./ExploreCardComponent";
 import { AiOutlineSetting } from "react-icons/ai"
@@ -22,9 +21,9 @@ export default function ProfileComponent() {
                             <div className="flex">
                                 <Link
                                     href={"/settings"}
-                                    className="flex items-center px-4 text-sm font-medium text-gray-900 bg-transparent border border-gray-600 rounded outline-none sm:ml-2 hover:bg-blue-600 hover:text-white focus:outline-none hover:border-blue-700">Edit
+                                    className="flex items-center px-4 text-sm font-medium text-gray-900 bg-transparent border border-gray-600 rounded outline-none sm:ml-2 hover:bg-dodger-blue-600 hover:text-white focus:outline-none hover:border-dodger-blue-700">Edit
                                     profile</Link>
-                                <Link href={"/settings"} className="p-1 ml-2 text-gray-700 border-transparent rounded-full cursor-pointer hover:text-blue-600 focus:outline-none focus:text-gray-600"
+                                <Link href={"/settings"} className="p-1 ml-2 text-gray-700 border-transparent rounded-full cursor-pointer hover:text-dodger-blue-600 focus:outline-none focus:text-gray-600"
                                     aria-label="Notifications">
                                     <AiOutlineSetting size={25} />
                                 </Link>
@@ -32,8 +31,8 @@ export default function ProfileComponent() {
                         </div>
                         <div className="flex items-center justify-between mt-3 space-x-2">
                             <div className="flex"><span className="mr-1 font-semibold">55 </span> Post</div>
-                            <div className="flex"><span className="mr-1 font-semibold">10k </span> Follower</div>
-                            <div className="flex"><span className="mr-1 font-semibold">20</span> Following</div>
+                            <Link href={`/okokok/followers`} className="flex"><span className="mr-1 font-semibold">10k </span> Followers</Link>
+                            <Link href={`/okokok/following`} className="flex"><span className="mr-1 font-semibold">20</span> Following</Link>
                         </div>
                     </div>
                 </div>

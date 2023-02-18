@@ -1,13 +1,8 @@
-import Head from 'next/head'
 import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from '@/styles/Home.module.css'
 import Layout from '@/components/Layout'
-import FeedCard from '@/components/FeedCompoonent'
 import Input from '@/components/Input'
 import Button from '@/components/Button'
-
-const inter = Inter({ subsets: ['latin'] })
+import Link from 'next/link'
 
 export default function Settings() {
     return (
@@ -15,17 +10,15 @@ export default function Settings() {
             <Layout>
                 <div className="w-full min-h-screen p-4">
                     <div className='max-w-screen-lg px-10 py-6 mx-4 bg-white rounded-lg shadow md:mx-auto border-1' >
-
                         <div className="flex items-centerr text-base py-6 " >
-                            <a href={"/profile"} className="relative  rounded-full overflow-hidden w-14 h-14 mr-2" >
+                            <Link href={"/profile"} className="relative  rounded-full overflow-hidden w-14 h-14 mr-2" >
                                 <Image src={"/pic1.jpeg"} alt="#" fill style={{ objectFit: "cover" }} />
-                            </a>
-                            <a>
+                            </Link>
+                            <Link href={"/profile"}>
                                 <p className='font-normal' >Olivia Rhye</p>
-                                <p className="font-normal text-dodger-blue-500" >@itsmeieijij</p>
-                            </a>
+                                <p className="font-normal " >@itsmeieijij</p>
+                            </Link>
                         </div>
-
                         <form>
                             <div className='w-2/3 flex items-center justify-between mb-6 ' >
                                 <label className='mr-3 text-left '>Name</label>
@@ -61,10 +54,6 @@ export default function Settings() {
                         </form>
                     </div>
                 </div>
-
-
-
-
             </Layout>
         </>
     )

@@ -3,6 +3,7 @@ import NavBar from './Navbar'
 import HeaderNavBar from './HeaderNavBar';
 import React from "react";
 import { useRouter } from "next/router"
+import Suggestions from './Suggestions';
 
 export default function Layout({ children }: any) {
     const router = useRouter()
@@ -20,8 +21,9 @@ export default function Layout({ children }: any) {
                         {children}
                     </div>
                     {router.pathname === "/" &&
-                        <div className=' py-10 border-l-2 border-gray-200 px-6 md:block' style={{ width: "33rem" }}  >
-                            Mini Profile
+                        <div className=' py-10 border-l-2 border-gray-200 px-16 md:block ' style={{ width: "33rem" }}  >
+                            <Suggestions />
+                            <div className='font-thin text-center my-6'> &copy; {new Date().getFullYear()} Olaonipekun Carew </div>
                         </div>}
 
                 </div>

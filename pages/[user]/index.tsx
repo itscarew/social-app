@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout'
 import ProfileComponent from '@/components/ProfileComponent'
 
-export default function Profile() {
+export default function UserProfile() {
     return (
         <>
             <Layout>

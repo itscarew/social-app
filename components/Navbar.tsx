@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -26,7 +26,7 @@ export default function NavBar() {
 
     return (
         <nav className='w-72 py-10 border-r-2 border-gray-200 px-6 hidden md:block  '>
-            <div className=' text-2xl flex items-center font-medium'>  <h1 className='ml-3 font-light'> SocialApp </h1></div>
+            <Link href={"/"} className=' text-2xl flex items-center font-medium'>  <h1 className='ml-3 font-normal '> SocialApp </h1></Link>
             <div className="pt-6" >
                 <Input rounded icon={<CiSearch size={"20"} className='absolute left-3' />} placeHolder="Search" className="pl-10 border-2 " />
             </div>
@@ -39,7 +39,7 @@ export default function NavBar() {
                                 onClick={route.name === "Create" ? handleCreate : () => router.push(route.href)}
                             >
                                 {route.icon}  <div className='ml-4 text-lg font-light  '>{route.name}  </div>
-                                {(route.name === "Notification") && <div className="absolute right-0 bg-red-200 rounded-full h-7 w-10 ml-2 flex items-center justify-center ">10 </div>}
+                                {(route.name === "Notification") && <div className="absolute right-0 bg-dodger-blue-500 text-white  rounded-full h-7 w-10 ml-2 flex items-center justify-center ">10 </div>}
                             </div>
                         </div>)
                 })}
@@ -48,7 +48,7 @@ export default function NavBar() {
             <div className="flex items-center border-t-2 border-gray-200 justify-between text-sm py-6 " >
                 <div className="flex items-center" >
                     <Link href={"/profile"} className="relative  rounded-full overflow-hidden w-10 h-10 mr-2" >
-                        <Image src={"/pic1.jpeg"} alt="#" fill />
+                        <Image src={"/pic1.jpeg"} alt="#" fill style={{ objectFit: "cover" }} />
                     </Link>
                     <Link href={"/profile"} >
                         <p>Olivia Rhye</p>
@@ -60,7 +60,7 @@ export default function NavBar() {
                 </div>
             </div>
 
-            <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Create new post">
+            <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Create new post" className="max-w-4xl" >
                 <CreatePostComponent />
             </Modal>
         </nav>
