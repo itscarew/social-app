@@ -39,7 +39,7 @@ export default function Suggestions({ height }: Partial<any>) {
                 <p className="text-gray-500" >Suggetions for you</p>
                 <Link href={"/explore-people"} >See All </Link>
             </div>
-            {users.map((user) => {
+            {users?.map((user) => {
                 return <SuggestCard key={user.id} user={user.data()} userId={user.id} />
             })}
         </div>

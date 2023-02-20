@@ -24,12 +24,13 @@ export default function AuthComponent() {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
-                dispatch(setAuthUser(user.toJSON()))
+                // dispatch(setAuthUser(user.toJSON()))
                 // Create a reference to the document with the user's UID
                 const userRef = doc(userCollection, user.uid);
-                const oneDoc = await getDoc(userRef)
+                const oneDoc: any = await getDoc(userRef)
+                dispatch(setAuthUser(oneDoc.data()))
                 if (!oneDoc.exists()) {
-                    setDoc(userRef, {
+                    await setDoc(userRef, {
                         uid: user.uid,
                         name: user.displayName,
                         username: createUsername(user.displayName),
@@ -39,6 +40,7 @@ export default function AuthComponent() {
                         phone: user.phoneNumber,
                         avatar: user.photoURL
                     })
+                    dispatch(setAuthUser(oneDoc.data()))
                 }
             } else {
                 dispatch(setAuthUser(null))

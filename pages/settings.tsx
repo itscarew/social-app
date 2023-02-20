@@ -13,27 +13,21 @@ import type { RootState } from '../store/index'
 
 export default function Settings() {
     const authUser = useSelector((state: RootState) => state.user)
-    const [user, setUser] = useState<any>({ data: "", id: "" })
     const [data, setData] = useState({ name: "", username: "", email: "", bio: "", phone: "", website: "" })
 
     const userCollection = collection(dataBase, 'users');
 
     useEffect(() => {
-        const subscribe = async () => {
-            const user = await getAUser()
-            setUser({ ...user, data: user.data(), id: user.id })
-            setData({
-                ...data,
-                name: user.data().name,
-                username: user.data().username,
-                email: user.data().email,
-                bio: user.data().bio,
-                phone: user.data().phone,
-                website: user.data().website
-            })
-        }
-        subscribe();
-    }, [])
+        setData({
+            ...data,
+            name: authUser.authUser?.name,
+            username: authUser.authUser?.username,
+            email: authUser.authUser?.email,
+            bio: authUser.authUser?.bio,
+            phone: authUser.authUser?.phone,
+            website: authUser.authUser?.website
+        })
+    }, [authUser.authUser])
 
     const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value })
@@ -41,7 +35,7 @@ export default function Settings() {
 
     const update = async (e) => {
         e.preventDefault()
-        const userRef = doc(userCollection, user.id);
+        const userRef = doc(userCollection, authUser.authUser?.uid);
         const oneDoc = await getDoc(userRef)
         if (oneDoc.exists()) {
             setDoc(userRef, {
@@ -62,37 +56,37 @@ export default function Settings() {
                     <div className='max-w-screen-lg px-10 py-6 mx-4 bg-white rounded-lg shadow md:mx-auto border-1' >
                         <div className="flex items-centerr text-base py-6 " >
                             <Link href={"/profile"} className="relative  rounded-full overflow-hidden w-14 h-14 mr-2" >
-                                <Image src={authUser.authUser?.photoURL} alt={authUser.authUser?.photoURL} fill style={{ objectFit: "cover" }} />
+                                <Image src={authUser.authUser?.avatar} alt={authUser.authUser?.photoURL} fill style={{ objectFit: "cover" }} />
                             </Link>
                             <Link href={"/profile"}>
-                                <p className='font-normal' > {user?.data.name} </p>
-                                <p className="font-normal " > {user?.data.username} </p>
+                                <p className='font-normal' > {data?.name} </p>
+                                <p className="font-normal " > {data?.username} </p>
                             </Link>
                         </div>
                         <form onSubmit={update}>
                             <div className='w-2/3 flex items-center justify-between mb-6 ' >
                                 <label className='mr-3 text-left '>Name</label>
                                 <div className='w-4/5'>
-                                    <Input value={data.name} name={"name"}
+                                    <Input value={data?.name} name={"name"}
                                         onChange={handleChange}
                                         rounded className="pl-2 border-2 " />
                                 </div>
                             </div>
                             <div className='w-2/3 flex items-center justify-between mb-6 ' >
                                 <label className='mr-3 text-left'>Username</label>
-                                <div className='w-4/5'><Input value={data.username} name={"username"}
+                                <div className='w-4/5'><Input value={data?.username} name={"username"}
                                     onChange={handleChange} rounded className="pl-2 border-2 " /></div>
                             </div>
                             <div className='w-2/3 flex items-center justify-between mb-6 ' >
                                 <label className='mr-3'>Website</label>
-                                <div className='w-4/5'><Input value={data.website} name={"website"}
+                                <div className='w-4/5'><Input value={data?.website} name={"website"}
                                     onChange={handleChange} rounded className="pl-2 border-2 " /></div>
                             </div>
 
                             <div className='w-2/3 flex items-center justify-between mb-6 ' >
                                 <label className='mr-3'>Bio</label>
                                 <div className='w-4/5'>
-                                    <textarea value={data.bio} name={"bio"}
+                                    <textarea value={data?.bio} name={"bio"}
                                         onChange={handleChange} className={`w-full pl-2 h-24 outline-none rounded-lg py-2 border border-gray-300 focus:outline-none  focus:border-gray-400 `} />
                                 </div>
                             </div>
@@ -101,12 +95,12 @@ export default function Settings() {
 
                             <div className='w-2/3 flex items-center justify-between mb-6 ' >
                                 <label className='mr-3'>Email Address</label>
-                                <div className='w-4/5'><Input value={data.email} name={"email"}
+                                <div className='w-4/5'><Input value={data?.email} name={"email"}
                                     onChange={handleChange} rounded className="pl-2 border-2 " readOnly /></div>
                             </div>
                             <div className='w-2/3 flex items-center justify-between mb-6 ' >
                                 <label className='mr-3'>Phone Number</label>
-                                <div className='w-4/5'><Input value={data.phone} name={"phone"}
+                                <div className='w-4/5'><Input value={data?.phone} name={"phone"}
                                     onChange={handleChange} rounded className="pl-2 border-2 " /></div>
                             </div>
 

@@ -10,18 +10,14 @@ import type { RootState } from '../store/index'
 export default function ProfileComponent() {
     const authUser = useSelector((state: RootState) => state.user)
     const [posts, setPosts] = useState<any>([])
-    const [user, setUser] = useState<any>()
 
     useEffect(() => {
         const subscribe = async () => {
-            const user = await getAUser()
             const userPosts = await getUserPosts()
-            setUser(user.data())
             setPosts(userPosts)
         }
         subscribe();
     }, [])
-
 
     return (
         <>
@@ -30,13 +26,13 @@ export default function ProfileComponent() {
                     <div className="flex mx-auto sm:mr-10 sm:m-0">
                         <div className="relative items-center justify-center w-20 h-20 m-auto mr-4 sm:w-32 sm:h-32">
                             <Image alt="profil"
-                                src={authUser.authUser?.photoURL}
+                                src={authUser.authUser?.avatar}
                                 className="object-cover w-20 h-20 mx-auto rounded-full sm:w-32 sm:h-32" fill />
                         </div>
                     </div>
                     <div className="flex flex-col pt-4 mx-auto my-auto sm:pt-0 sm:mx-0">
                         <div className="flex flex-col mx-auto sm:flex-row sm:mx-0 ">
-                            <h2 className="flex pr-4 text-xl font-light text-gray-900 sm:text-3xl"> {user?.username} </h2>
+                            <h2 className="flex pr-4 text-xl font-light text-gray-900 sm:text-3xl"> {authUser.authUser?.username} </h2>
                             <div className="flex">
                                 <Link
                                     href={"/settings"}
@@ -49,16 +45,16 @@ export default function ProfileComponent() {
                             </div>
                         </div>
                         <div className="flex items-center justify-between mt-3 space-x-2">
-                            <div className="flex"><span className="mr-1 font-semibold">55 </span> Post</div>
-                            <Link href={`/okokok/followers`} className="flex"><span className="mr-1 font-semibold">10k </span> Followers</Link>
-                            <Link href={`/okokok/following`} className="flex"><span className="mr-1 font-semibold">20</span> Following</Link>
+                            <div className="flex"><span className="mr-1 font-semibold"> {posts.length}  </span> Post</div>
+                            <Link href={`/okokok/followers`} className="flex"><span className="mr-1 font-semibold"> {authUser.authUser?.following?.length}  </span> Followers</Link>
+                            <Link href={`/okokok/following`} className="flex"><span className="mr-1 font-semibold"> {authUser.authUser?.following?.length} </span> Following</Link>
                         </div>
                     </div>
                 </div>
                 <div className="w-full pt-5">
-                    <h1 className="text-lg font-semibold text-gray-800 sm:text-xl"> {user?.name}</h1>
-                    <p className="text-sm text-gray-800 md:text-base"> {user?.bio} </p>
-                    <a href={user?.website} target="/_blank" className="text-sm text-gray-500 md:text-base">{user?.website} </a>
+                    <h1 className="text-lg font-semibold text-gray-800 sm:text-xl"> {authUser.authUser?.name}</h1>
+                    <p className="text-sm text-gray-800 md:text-base"> {authUser.authUser?.bio} </p>
+                    <a href={authUser.authUser?.website} target="/_blank" className="text-sm text-gray-500 md:text-base">{authUser.authUser?.website} </a>
                 </div>
             </div>
 

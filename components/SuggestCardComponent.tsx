@@ -1,31 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from "@/store";
-import { arrayUnion, collection, doc, updateDoc } from "firebase/firestore";
-import { dataBase } from "@/utils/firebaseConfig";
+import { checkFollowing, followAUser, unfollowAUser } from "@/functions";
 
 export default function SuggestCard({ user, showHandle, userId }: Partial<any>) {
-    const authUser = useSelector((state: RootState) => state.user)
-    const userCollection = collection(dataBase, 'users');
-
-    const follow = async () => {
-        try {
-            const followerRef = doc(userCollection, authUser.authUser.uid);
-            const followedRef = doc(userCollection, userId);
-
-            await updateDoc(followerRef, {
-                following: arrayUnion(userId)
-            });
-            await updateDoc(followedRef, {
-                followers: arrayUnion(authUser.authUser.uid)
-            });
-
-        } catch (error) {
-            throw error
-        }
-    }
-
+    console.log(checkFollowing(userId), "ok")
     return (
         <div className="flex items-center justify-between" >
             <div className="flex items-center text-base py-1.5 " >
@@ -37,7 +15,7 @@ export default function SuggestCard({ user, showHandle, userId }: Partial<any>) 
                     {showHandle && <p className="font-normal" >{user?.username} </p>}
                 </Link>
             </div>
-            <div className=" text-dodger-blue-500 text-sm cursor-pointer" onClick={follow} >Follow</div>
+            <div className=" text-dodger-blue-500 text-sm cursor-pointer" onClick={checkFollowing(userId) ? () => unfollowAUser(userId) : () => followAUser(userId)} > {checkFollowing(userId) ? "Unfollow" : "Follow"}</div>
         </div>
 
 
