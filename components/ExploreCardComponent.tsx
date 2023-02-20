@@ -3,7 +3,7 @@ import Link from "next/link";
 import { BsHeart } from "react-icons/bs"
 import { FaRegComment } from "react-icons/fa"
 
-export default function ExploreCard({ height }: Partial<any>) {
+export default function ExploreCard({ height, posts }: Partial<any>) {
     return (
         <div className={`relative w-1/3 ${height} h-96 p-2 `} >
             <div className='relative w-full h-full' >
@@ -12,7 +12,7 @@ export default function ExploreCard({ height }: Partial<any>) {
                         <div className="flex items-center" > <BsHeart size={25} color="#fff" /> <p className="mx-2"> 2,555 </p> </div>
                         <div className="flex items-center" > <FaRegComment size={25} color="white" /> <p className="ml-2" > 55 </p> </div>
                     </div>
-                    <Image alt="#" src="/pic1.jpeg" fill style={{ objectFit: "cover", objectPosition: "center" }} />
+                    <Image alt="#" src={posts?.picture} fill style={{ objectFit: "cover", objectPosition: "center" }} />
                 </Link>
             </div>
         </div>

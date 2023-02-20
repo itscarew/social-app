@@ -6,8 +6,23 @@ import { FaRegComment } from "react-icons/fa"
 import CommentCard from "./CommentComponenet";
 import Button from "./Button";
 import SuggestCard from "./SuggestCardComponent";
+import { useState, useEffect } from "react"
+import { useSelector, useDispatch } from 'react-redux'
+import { getUserPosts, getAllPosts, getAUser, getOtherUsers } from "@/functions";
+import { RootState } from "@/store";
 
 export default function Suggestions({ height }: Partial<any>) {
+
+    const [users, setUsers] = useState<any[]>([])
+
+    useEffect(() => {
+        const subscribe = async () => {
+            const users = await getOtherUsers()
+            setUsers(users)
+        }
+        subscribe();
+    }, [])
+
     return (
         <div>
             <div className="flex items-center text-base py-6 " >
@@ -24,12 +39,9 @@ export default function Suggestions({ height }: Partial<any>) {
                 <p className="text-gray-500" >Suggetions for you</p>
                 <Link href={"/explore-people"} >See All </Link>
             </div>
-            <SuggestCard />
-            <SuggestCard />
-            <SuggestCard />
-            <SuggestCard />
-            <SuggestCard />
-            <SuggestCard />
+            {users.map((user) => {
+                return <SuggestCard key={user.id} user={user.data()} userId={user.id} />
+            })}
         </div>
 
     )

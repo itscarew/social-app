@@ -2,8 +2,27 @@ import Image from "next/image";
 import ExploreCard from "./ExploreCardComponent";
 import { AiOutlineSetting } from "react-icons/ai"
 import Link from "next/link";
+import { useState, useEffect } from "react"
+import { getUserPosts, getAUser } from "@/functions";
+import { useSelector, useDispatch } from 'react-redux'
+import type { RootState } from '../store/index'
 
 export default function ProfileComponent() {
+    const authUser = useSelector((state: RootState) => state.user)
+    const [posts, setPosts] = useState<any>([])
+    const [user, setUser] = useState<any>()
+
+    useEffect(() => {
+        const subscribe = async () => {
+            const user = await getAUser()
+            const userPosts = await getUserPosts()
+            setUser(user.data())
+            setPosts(userPosts)
+        }
+        subscribe();
+    }, [])
+
+
     return (
         <>
             <div className=" max-w-screen-lg px-10 py-6 mx-4 bg-white rounded-lg shadow md:mx-auto border-1">
@@ -11,13 +30,13 @@ export default function ProfileComponent() {
                     <div className="flex mx-auto sm:mr-10 sm:m-0">
                         <div className="relative items-center justify-center w-20 h-20 m-auto mr-4 sm:w-32 sm:h-32">
                             <Image alt="profil"
-                                src="/pic1.jpeg"
+                                src={authUser.authUser?.photoURL}
                                 className="object-cover w-20 h-20 mx-auto rounded-full sm:w-32 sm:h-32" fill />
                         </div>
                     </div>
                     <div className="flex flex-col pt-4 mx-auto my-auto sm:pt-0 sm:mx-0">
                         <div className="flex flex-col mx-auto sm:flex-row sm:mx-0 ">
-                            <h2 className="flex pr-4 text-xl font-light text-gray-900 sm:text-3xl">AlexNoah7</h2>
+                            <h2 className="flex pr-4 text-xl font-light text-gray-900 sm:text-3xl"> {user?.username} </h2>
                             <div className="flex">
                                 <Link
                                     href={"/settings"}
@@ -37,22 +56,18 @@ export default function ProfileComponent() {
                     </div>
                 </div>
                 <div className="w-full pt-5">
-                    <h1 className="text-lg font-semibold text-gray-800 sm:text-xl">Alexander Noah</h1>
-                    <p className="text-sm text-gray-500 md:text-base">Fotografer</p>
-                    <p className="text-sm text-gray-800 md:text-base">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Cupiditate, quam?</p>
+                    <h1 className="text-lg font-semibold text-gray-800 sm:text-xl"> {user?.name}</h1>
+                    <p className="text-sm text-gray-800 md:text-base"> {user?.bio} </p>
+                    <a href={user?.website} target="/_blank" className="text-sm text-gray-500 md:text-base">{user?.website} </a>
                 </div>
             </div>
 
-            <div className="max-w-screen-lg py-6 md:mx-auto flex items-start flex-wrap  h "  >
-                <ExploreCard height="h-80" />
-                <ExploreCard height="h-80" />
-                <ExploreCard height="h-80" />
-                <ExploreCard height="h-80" />
-                <ExploreCard height="h-80" />
-                <ExploreCard height="h-80" />
-
-
+            <div className="max-w-screen-lg py-6 md:mx-auto flex items-start flex-wrap "  >
+                {posts.map((post) => {
+                    return (
+                        <ExploreCard key={post.id} posts={post.data()} height="h-80" />
+                    )
+                })}
             </div>
         </>
     )

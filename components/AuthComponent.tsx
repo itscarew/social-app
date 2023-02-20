@@ -4,8 +4,15 @@ import { collection, addDoc, getDocs, doc, setDoc, getDoc } from 'firebase/fires
 import { signInWithPopup, GoogleAuthProvider, getAuth, onAuthStateChanged } from "firebase/auth";
 import { useState, useEffect } from "react"
 import Button from "./Button";
+import { useSelector, useDispatch } from 'react-redux'
+import { setAuthUser } from "@/store/slice/authSlice";
+import type { RootState } from '../store/index'
+import { createUsername } from "@/utils/userNameGenerator";
 
 export default function AuthComponent() {
+    const user = useSelector((state: RootState) => state.user)
+    const dispatch = useDispatch()
+
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ prompt: "select_account" });
@@ -17,9 +24,7 @@ export default function AuthComponent() {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
-                //set auth user parameter
-                /////////////here
-
+                dispatch(setAuthUser(user.toJSON()))
                 // Create a reference to the document with the user's UID
                 const userRef = doc(userCollection, user.uid);
                 const oneDoc = await getDoc(userRef)
@@ -27,16 +32,16 @@ export default function AuthComponent() {
                     setDoc(userRef, {
                         uid: user.uid,
                         name: user.displayName,
-                        username: '',
+                        username: createUsername(user.displayName),
                         bio: '',
                         website: '',
                         email: user.email,
-                        phone: user.phoneNumber
+                        phone: user.phoneNumber,
+                        avatar: user.photoURL
                     })
                 }
             } else {
-                //set auth user parameter to null
-                /////////////here
+                dispatch(setAuthUser(null))
             }
         });
         return () => unsubscribe();
