@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { BsHeart } from "react-icons/bs"
 
-export default function FeedCard() {
+export default function FeedCard({ post }) {
     const router = useRouter()
     return (
         <div className="bg-white border rounded-sm mx-auto mb-8 ">
@@ -13,11 +13,11 @@ export default function FeedCard() {
                 <Image className="h-8 w-8 rounded-full" src="/pic1.jpeg" alt="#" width={50} height={50} />
                 <div className="ml-3 ">
                     <Link href={`/8fact`} className="text-sm font-semibold antialiased block leading-tight">8fact</Link>
-                    <span className="text-gray-600 text-xs block">Asheville, North Carolina</span>
+                    <span className="text-gray-600 text-xs block">{post.location}</span>
                 </div>
             </div>
             <div className="w-full relative " style={{ height: "40rem" }} >
-                <Image alt="#" src="/pic1.jpeg" fill style={{ objectFit: "cover", objectPosition: "center" }} />
+                <Image alt="#" src={post?.picture} fill style={{ objectFit: "cover", objectPosition: "center" }} />
             </div>
             <div className="flex items-center justify-between mx-4 mt-3 mb-2">
                 <div className="flex items-center gap-5">
@@ -29,7 +29,11 @@ export default function FeedCard() {
                     <svg className=" cursor-pointer" fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path d="M43.5 48c-.4 0-.8-.2-1.1-.4L24 29 5.6 47.6c-.4.4-1.1.6-1.6.3-.6-.2-1-.8-1-1.4v-45C3 .7 3.7 0 4.5 0h39c.8 0 1.5.7 1.5 1.5v45c0 .6-.4 1.2-.9 1.4-.2.1-.4.1-.6.1zM24 26c.8 0 1.6.3 2.2.9l15.8 16V3H6v39.9l15.8-16c.6-.6 1.4-.9 2.2-.9z"></path></svg>
                 </div>
             </div>
-            <div className="font-semibold text-sm mx-4 mt-2 mb-4">92,372 likes</div>
+            <div className="font-semibold text-sm mx-4 mt-2 mb-1">92,372 likes</div>
+            <div className='flex items-start justify-between text-base py-0 mx-4' >
+                <p className="font-semibold w-[88%]"> <Link href={"/ororko"}> @itsmeieijij </Link> <span className='font-normal'> {post?.text} </span>
+                </p>
+            </div>
             <div>
                 <Input icon={<IoIosSend size={"20"} className='absolute right-3 cursor-pointer' />} placeHolder="Post a comment" className="pl-3" />
             </div>

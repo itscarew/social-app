@@ -8,10 +8,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setAuthUser } from "@/store/slice/authSlice";
 import type { RootState } from '../store/index'
 import { createUsername } from "@/utils/userNameGenerator";
+import { useRouter } from "next/router"
 
 export default function AuthComponent() {
     const user = useSelector((state: RootState) => state.user)
     const dispatch = useDispatch()
+    const router = useRouter()
 
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
@@ -24,11 +26,9 @@ export default function AuthComponent() {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
-                // dispatch(setAuthUser(user.toJSON()))
-                // Create a reference to the document with the user's UID
+                dispatch(setAuthUser(user.toJSON()))
                 const userRef = doc(userCollection, user.uid);
                 const oneDoc: any = await getDoc(userRef)
-                dispatch(setAuthUser(oneDoc.data()))
                 if (!oneDoc.exists()) {
                     await setDoc(userRef, {
                         uid: user.uid,
@@ -40,10 +40,11 @@ export default function AuthComponent() {
                         phone: user.phoneNumber,
                         avatar: user.photoURL
                     })
-                    dispatch(setAuthUser(oneDoc.data()))
                 }
+                // router.push("/")
             } else {
                 dispatch(setAuthUser(null))
+                router.push("/auth")
             }
         });
         return () => unsubscribe();

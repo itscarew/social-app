@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout'
 import ExploreCard from '@/components/ExploreCardComponent'
 import { useState, useEffect } from "react"
-import { getUserPosts, getAllPosts, getAUser } from "@/functions";
+import { getUserPosts, getAllPosts } from "@/functions";
 import { useSelector, useDispatch } from 'react-redux'
 import type { RootState } from '../store/index'
 

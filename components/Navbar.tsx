@@ -10,9 +10,12 @@ import Modal from "./modal";
 import CreatePostComponent from "./CreatePostComponen";
 import { getAuth } from "firebase/auth";
 import { app } from "@/utils/firebaseConfig";
+import { RootState } from "@/store";
+import { useSelector } from "react-redux";
 
 export default function NavBar() {
     const auth = getAuth(app);
+    const authUser = useSelector((state: RootState) => state.user)
     const router = useRouter();
     const routes = [
         { name: "Home", icon: <AiOutlineHome size={20} />, href: "/" },
@@ -53,11 +56,11 @@ export default function NavBar() {
             <div className="flex items-center border-t-2 border-gray-200 justify-between text-sm py-6 " >
                 <div className="flex items-center" >
                     <Link href={"/profile"} className="relative  rounded-full overflow-hidden w-10 h-10 mr-2" >
-                        <Image src={"/pic1.jpeg"} alt="#" fill style={{ objectFit: "cover" }} />
+                        <Image src={authUser.authUser?.photoURL} alt="#" fill style={{ objectFit: "cover" }} />
                     </Link>
                     <Link href={"/profile"} >
-                        <p>Olivia Rhye</p>
-                        <p className="font-normal" >olivia@untitledui.com</p>
+                        <p> {authUser.authUser?.email} </p>
+                        <p className="text-green-400" > verified </p>
                     </Link>
                 </div>
                 <div className=" cursor-pointer" onClick={handleSignOut} >

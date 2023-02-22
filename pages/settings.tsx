@@ -3,7 +3,7 @@ import Layout from '@/components/Layout'
 import Input from '@/components/Input'
 import Button from '@/components/Button'
 import Link from 'next/link'
-import { getAUser } from '@/functions'
+import { getMyUser } from '@/functions'
 import { useState, useEffect } from "react"
 import { collection, doc, getDoc, setDoc } from 'firebase/firestore'
 import { dataBase } from '@/utils/firebaseConfig'
@@ -12,30 +12,34 @@ import type { RootState } from '../store/index'
 
 
 export default function Settings() {
-    const authUser = useSelector((state: RootState) => state.user)
+    const authUser = useSelector((state: RootState) => state.user.authUser)
     const [data, setData] = useState({ name: "", username: "", email: "", bio: "", phone: "", website: "" })
 
-    const userCollection = collection(dataBase, 'users');
 
-    useEffect(() => {
+    const subscribe = async () => {
+        const myUser = await getMyUser(authUser.uid)
         setData({
             ...data,
-            name: authUser.authUser?.name,
-            username: authUser.authUser?.username,
-            email: authUser.authUser?.email,
-            bio: authUser.authUser?.bio,
-            phone: authUser.authUser?.phone,
-            website: authUser.authUser?.website
+            name: myUser.data()?.name,
+            username: myUser.data()?.username,
+            email: myUser.data()?.email,
+            bio: myUser.data()?.bio,
+            phone: myUser.data()?.phone,
+            website: myUser.data()?.website
         })
-    }, [authUser.authUser])
+    }
+    useEffect(() => {
+        subscribe();
+    }, [])
 
     const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value })
     }
 
+    const userCollection = collection(dataBase, 'users');
     const update = async (e) => {
         e.preventDefault()
-        const userRef = doc(userCollection, authUser.authUser?.uid);
+        const userRef = doc(userCollection, authUser?.uid || "");
         const oneDoc = await getDoc(userRef)
         if (oneDoc.exists()) {
             setDoc(userRef, {
@@ -56,7 +60,7 @@ export default function Settings() {
                     <div className='max-w-screen-lg px-10 py-6 mx-4 bg-white rounded-lg shadow md:mx-auto border-1' >
                         <div className="flex items-centerr text-base py-6 " >
                             <Link href={"/profile"} className="relative  rounded-full overflow-hidden w-14 h-14 mr-2" >
-                                <Image src={authUser.authUser?.avatar} alt={authUser.authUser?.photoURL} fill style={{ objectFit: "cover" }} />
+                                <Image src={authUser.photoURL} alt={authUser.authUser?.photoURL} fill style={{ objectFit: "cover" }} />
                             </Link>
                             <Link href={"/profile"}>
                                 <p className='font-normal' > {data?.name} </p>

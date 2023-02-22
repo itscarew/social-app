@@ -2,18 +2,20 @@ import Layout from '@/components/Layout'
 import ExploreCard from '@/components/ExploreCardComponent'
 import SuggestCard from '@/components/SuggestCardComponent'
 import { useState, useEffect } from "react"
-import { useSelector, useDispatch } from 'react-redux'
-import { getUserPosts, getAllPosts, getAUser, getOtherUsers } from "@/functions";
+import { useSelector } from 'react-redux'
+import { getOtherUsers } from "@/functions";
 import { RootState } from "@/store";
 
 export default function ExplorePeople() {
+    const authUser = useSelector((state: RootState) => state.user.authUser)
     const [users, setUsers] = useState<any[]>([])
 
+    const subscribe = async () => {
+        const users = await getOtherUsers(authUser.uid)
+        setUsers(users)
+    }
+
     useEffect(() => {
-        const subscribe = async () => {
-            const users = await getOtherUsers()
-            setUsers(users)
-        }
         subscribe();
     }, [])
 

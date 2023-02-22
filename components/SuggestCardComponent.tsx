@@ -1,9 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { checkFollowing, followAUser, unfollowAUser } from "@/functions";
+import FollowButton from "./Follow-Button";
 
-export default function SuggestCard({ user, showHandle, userId }: Partial<any>) {
-    console.log(checkFollowing(userId), "ok")
+export default function SuggestCard({ user, showHandle }: Partial<any>) {
     return (
         <div className="flex items-center justify-between" >
             <div className="flex items-center text-base py-1.5 " >
@@ -15,7 +14,7 @@ export default function SuggestCard({ user, showHandle, userId }: Partial<any>) 
                     {showHandle && <p className="font-normal" >{user?.username} </p>}
                 </Link>
             </div>
-            <div className=" text-dodger-blue-500 text-sm cursor-pointer" onClick={checkFollowing(userId) ? () => unfollowAUser(userId) : () => followAUser(userId)} > {checkFollowing(userId) ? "Unfollow" : "Follow"}</div>
+            <FollowButton user={user} />
         </div>
 
 

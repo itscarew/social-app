@@ -1,12 +1,31 @@
 import Layout from '@/components/Layout'
 import ProfileComponent from '@/components/ProfileComponent'
+import { getMyUser, getUserPosts } from '@/functions'
+import { RootState } from '@/store'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
 export default function Profile() {
+
+    const authUser = useSelector((state: RootState) => state.user.authUser)
+    const [posts, setPosts] = useState<any>([])
+    const [myUser, setMyUser] = useState<any>()
+
+    const subscribe = async () => {
+        const myUser = await getMyUser(authUser?.uid)
+        const userPosts = await getUserPosts(myUser?.id || "")
+        setMyUser(myUser.data())
+        setPosts(userPosts)
+    }
+
+    useEffect(() => {
+        subscribe();
+    }, [])
     return (
         <>
             <Layout>
                 <div className="w-full min-h-screen p-4">
-                    <ProfileComponent />
+                    <ProfileComponent user={myUser} posts={posts} />
                 </div>
             </Layout>
         </>

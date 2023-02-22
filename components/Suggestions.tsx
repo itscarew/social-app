@@ -1,27 +1,25 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FcLike } from "react-icons/fc"
-import { FaRegComment } from "react-icons/fa"
-import CommentCard from "./CommentComponenet";
-import Button from "./Button";
 import SuggestCard from "./SuggestCardComponent";
 import { useState, useEffect } from "react"
-import { useSelector, useDispatch } from 'react-redux'
-import { getUserPosts, getAllPosts, getAUser, getOtherUsers } from "@/functions";
+import { useSelector } from 'react-redux'
+import { getOtherUsers } from "@/functions";
 import { RootState } from "@/store";
 
-export default function Suggestions({ height }: Partial<any>) {
-
+export default function Suggestions() {
+    const authUser = useSelector((state: RootState) => state.user.authUser)
     const [users, setUsers] = useState<any[]>([])
 
+    const subscribe = async () => {
+        const users = await getOtherUsers(authUser.uid)
+        setUsers(users)
+    }
+
     useEffect(() => {
-        const subscribe = async () => {
-            const users = await getOtherUsers()
-            setUsers(users)
-        }
         subscribe();
     }, [])
+
 
     return (
         <div>
@@ -40,7 +38,7 @@ export default function Suggestions({ height }: Partial<any>) {
                 <Link href={"/explore-people"} >See All </Link>
             </div>
             {users?.map((user) => {
-                return <SuggestCard key={user.id} user={user.data()} userId={user.id} />
+                return <SuggestCard key={user.id} user={user.data()} />
             })}
         </div>
 
