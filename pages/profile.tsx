@@ -12,15 +12,17 @@ export default function Profile() {
     const [myUser, setMyUser] = useState<any>()
 
     const subscribe = async () => {
-        const myUser = await getMyUser(authUser?.uid)
-        const userPosts = await getUserPosts(myUser?.id || "")
-        setMyUser(myUser.data())
-        setPosts(userPosts)
+        if (authUser.uid) {
+            const myUser = await getMyUser(authUser?.uid)
+            const userPosts = await getUserPosts(myUser?.id)
+            setMyUser(myUser.data())
+            setPosts(userPosts)
+        }
     }
 
     useEffect(() => {
         subscribe();
-    }, [])
+    }, [authUser?.uid])
     return (
         <>
             <Layout>

@@ -7,7 +7,7 @@ import { getMyUser } from '@/functions'
 import { useState, useEffect } from "react"
 import { collection, doc, getDoc, setDoc } from 'firebase/firestore'
 import { dataBase } from '@/utils/firebaseConfig'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import type { RootState } from '../store/index'
 
 
@@ -17,20 +17,22 @@ export default function Settings() {
 
 
     const subscribe = async () => {
-        const myUser = await getMyUser(authUser.uid)
-        setData({
-            ...data,
-            name: myUser.data()?.name,
-            username: myUser.data()?.username,
-            email: myUser.data()?.email,
-            bio: myUser.data()?.bio,
-            phone: myUser.data()?.phone,
-            website: myUser.data()?.website
-        })
+        if (authUser.uid) {
+            const myUser = await getMyUser(authUser.uid)
+            setData({
+                ...data,
+                name: myUser.data()?.name,
+                username: myUser.data()?.username,
+                email: myUser.data()?.email,
+                bio: myUser.data()?.bio,
+                phone: myUser.data()?.phone,
+                website: myUser.data()?.website
+            })
+        }
     }
     useEffect(() => {
         subscribe();
-    }, [])
+    }, [authUser.uid])
 
     const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value })
@@ -39,7 +41,7 @@ export default function Settings() {
     const userCollection = collection(dataBase, 'users');
     const update = async (e) => {
         e.preventDefault()
-        const userRef = doc(userCollection, authUser?.uid || "");
+        const userRef = doc(userCollection, authUser?.uid);
         const oneDoc = await getDoc(userRef)
         if (oneDoc.exists()) {
             setDoc(userRef, {

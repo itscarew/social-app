@@ -12,13 +12,15 @@ export default function Suggestions() {
     const [users, setUsers] = useState<any[]>([])
 
     const subscribe = async () => {
-        const users = await getOtherUsers(authUser.uid)
-        setUsers(users)
+        if (authUser.uid) {
+            const users = await getOtherUsers(authUser.uid)
+            setUsers(users)
+        }
     }
 
     useEffect(() => {
         subscribe();
-    }, [])
+    }, [authUser.uid])
 
 
     return (

@@ -1,7 +1,5 @@
 import Layout from '@/components/Layout'
 import FeedCard from '@/components/FeedCompoonent'
-import { app, dataBase } from "../utils/firebaseConfig"
-import { collection, addDoc } from 'firebase/firestore';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { useEffect, useState } from 'react';
@@ -14,26 +12,20 @@ export default function Home() {
 
   const following: [] = myUser?.following;
 
-
-  const followingPosts = following?.map(id => posts?.filter(obj => obj.data().userId === id));
-
-  console.log(followingPosts, "876")
-
-
+  const followingPosts = following?.map(id => posts?.filter(obj => obj.data().userId === id))
 
   const subscribe = async () => {
-    const user = await getMyUser(authUser?.uid);
-    const posts = await getAllPosts()
-    setPosts(posts)
-    // posts.forEach((post) => {
-    //   setPosts(post.data())
-    // })
-
-    setMyUser(user.data())
+    if (authUser?.uid) {
+      const user = await getMyUser(authUser?.uid);
+      const posts = await getAllPosts()
+      setPosts(posts)
+      setMyUser(user.data())
+    }
   }
+
   useEffect(() => {
     subscribe()
-  }, [])
+  }, [authUser?.uid])
   return (
     <>
       <Layout>

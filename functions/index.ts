@@ -23,7 +23,7 @@ console.log(auth.currentUser?.uid, "ok");
 
 export const getMyUser = async (authUserId) => {
   try {
-    const userRef = doc(userCollection, authUserId || "");
+    const userRef = doc(userCollection, authUserId);
     const oneDoc = await getDoc(userRef);
     return oneDoc;
   } catch (error) {
