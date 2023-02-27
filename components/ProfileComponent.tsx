@@ -43,8 +43,8 @@ export default function ProfileComponent({ user, posts }) {
                         </div>
                         <div className="flex items-center justify-between mt-3 space-x-2">
                             <div className="flex"><span className="mr-1 font-semibold"> {posts.length}  </span> Post</div>
-                            <Link href={`/okokok/followers`} className="flex"><span className="mr-1 font-semibold"> {user?.followers?.length}  </span> Followers</Link>
-                            <Link href={`/okokok/following`} className="flex"><span className="mr-1 font-semibold"> {user?.following?.length} </span> Following</Link>
+                            <Link href={`/${user?.username}/followers`} className="flex"><span className="mr-1 font-semibold"> {user?.followers?.length}  </span> Followers</Link>
+                            <Link href={`/${user?.username}/following`} className="flex"><span className="mr-1 font-semibold"> {user?.following?.length} </span> Following</Link>
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,7 @@ export default function ProfileComponent({ user, posts }) {
             <div className="max-w-screen-lg py-6 md:mx-auto flex items-start flex-wrap "  >
                 {posts.map((post) => {
                     return (
-                        <ExploreCard key={post.id} posts={post.data()} height="h-80" />
+                        <ExploreCard key={post.id} post={post.data()} postId={post.id} height="h-80" />
                     )
                 })}
             </div>

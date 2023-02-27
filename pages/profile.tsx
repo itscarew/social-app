@@ -1,6 +1,6 @@
 import Layout from '@/components/Layout'
 import ProfileComponent from '@/components/ProfileComponent'
-import { getMyUser, getUserPosts } from '@/functions'
+import { getAUser, getUserPosts } from '@/functions'
 import { RootState } from '@/store'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -13,7 +13,7 @@ export default function Profile() {
 
     const subscribe = async () => {
         if (authUser.uid) {
-            const myUser = await getMyUser(authUser?.uid)
+            const myUser = await getAUser(authUser?.uid)
             const userPosts = await getUserPosts(myUser?.id)
             setMyUser(myUser.data())
             setPosts(userPosts)

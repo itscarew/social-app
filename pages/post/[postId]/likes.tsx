@@ -1,47 +1,49 @@
 import Layout from '@/components/Layout'
 import SuggestCard from '@/components/SuggestCardComponent'
 import { useEffect, useState } from 'react'
-import { getAUserByUsername, getUserFollowing } from '@/functions'
+import { getAPost, getAUserByUsername, getPostLikes, getUserFollowing } from '@/functions'
 import { useRouter } from 'next/dist/client/router'
 
 export default function Following() {
     const router = useRouter()
-    const [user, setUser] = useState<any>()
+    const [post, setPost] = useState<any>()
 
-    //users that are following
+    //users that liked
     const [users, setUsers] = useState<any[]>([])
 
-    const following: [] = user?.following;
+    const likes: [] = post?.likes;
 
     const subscribe = async () => {
-        if (router.query.user) {
-            const user = await getAUserByUsername(router.query.user);
-            setUser(user?.data())
+        if (router.query.postId) {
+            const post = await getAPost(router.query.postId);
+            setPost(post?.data())
         }
     }
 
     useEffect(() => {
         subscribe()
-    }, [router.query.user])
+    }, [router.query.postId])
 
 
-    const subscribeFollowing = async () => {
-        const users = await getUserFollowing(following)
+    const subscribeLikes = async () => {
+        const users = await getPostLikes(likes)
         setUsers(users)
     }
 
     useEffect(() => {
-        subscribeFollowing()
-    }, [following])
+        subscribeLikes()
+    }, [likes])
+
+    console.log(users, likes)
 
     return (
         <>
             <Layout>
                 <div className="w-full min-h-screen p-4">
                     <div className='  max-w-screen-sm px-10 bg-white py-6 mx-4  rounded-lg md:mx-auto border-1' >
-                        <h1 className='text-lg mb-3' >Following</h1>
+                        <h1 className='text-lg mb-3' >Likers</h1>
                         {users?.map((user) => {
-                            return <SuggestCard key={user.id} user={user.data()} showHandle />
+                            return <SuggestCard key={user.id} user={user.data()} userId={user.id} showHandle />
                         })}
                     </div>
                 </div>

@@ -1,7 +1,18 @@
 import React from "react";
 
+type InputProps = {
+    className: string;
+    rounded: boolean;
+    icon: any;
+    placeHolder: string;
+    value: any;
+    name: any;
+    onChange: any;
+    readOnly: boolean
+};
 
-export default function Input({ className, rounded, icon, placeHolder, value, name, onChange, readOnly }: Partial<any>) {
+
+export default function Input({ className, rounded, icon, placeHolder, value, name, onChange, readOnly }: Partial<InputProps>) {
     return (
         <>
             <div className='flex items-center relative ' >

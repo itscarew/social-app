@@ -3,7 +3,7 @@ type ButtonProps = {
     buttonType: any
 };
 
-import { followAUser, getMyUser, unfollowAUser } from "@/functions";
+import { followAUser, getAUser, unfollowAUser } from "@/functions";
 import { RootState } from "@/store";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -13,7 +13,7 @@ export default function FollowButton({ user, buttonType }: Partial<ButtonProps>)
     const [myUser, setMyUser] = useState<any>()
 
     const subscribe = async () => {
-        const user = await getMyUser(authUser?.uid);
+        const user = await getAUser(authUser?.uid);
         setMyUser(user.data())
     }
     useEffect(() => {

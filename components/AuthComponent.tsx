@@ -1,8 +1,8 @@
 import React from "react";
 import { app, dataBase } from "../utils/firebaseConfig"
-import { collection, addDoc, getDocs, doc, setDoc, getDoc } from 'firebase/firestore';
+import { collection, doc, setDoc, getDoc } from 'firebase/firestore';
 import { signInWithPopup, GoogleAuthProvider, getAuth, onAuthStateChanged } from "firebase/auth";
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import Button from "./Button";
 import { useSelector, useDispatch } from 'react-redux'
 import { setAuthUser } from "@/store/slice/authSlice";

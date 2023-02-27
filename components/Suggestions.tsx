@@ -4,16 +4,19 @@ import Link from "next/link";
 import SuggestCard from "./SuggestCardComponent";
 import { useState, useEffect } from "react"
 import { useSelector } from 'react-redux'
-import { getOtherUsers } from "@/functions";
+import { getAUser, getOtherUsers } from "@/functions";
 import { RootState } from "@/store";
 
 export default function Suggestions() {
     const authUser = useSelector((state: RootState) => state.user.authUser)
     const [users, setUsers] = useState<any[]>([])
+    const [myUser, setMyUser] = useState<any>()
 
     const subscribe = async () => {
         if (authUser.uid) {
-            const users = await getOtherUsers(authUser.uid)
+            const myUser = await getAUser(authUser?.uid)
+            const users = await getOtherUsers(authUser?.uid)
+            setMyUser(myUser.data())
             setUsers(users)
         }
     }
@@ -27,11 +30,11 @@ export default function Suggestions() {
         <div>
             <div className="flex items-center text-base py-6 " >
                 <Link href={"/profile"} className="relative  rounded-full overflow-hidden w-14 h-14 mr-2" >
-                    <Image src={"/pic1.jpeg"} alt="#" fill style={{ objectFit: "cover" }} />
+                    <Image src={myUser?.avatar} alt="#" fill style={{ objectFit: "cover" }} />
                 </Link>
-                <Link href={"/profile"} >
-                    <p className=' font-medium ' >Olivia Rhye</p>
-                    <p className="font-normal" >@itsmeieijij</p>
+                <Link href={`/profile`} >
+                    <p className=' font-medium ' > {myUser?.name} </p>
+                    <p className="font-normal" > {myUser?.username} </p>
                 </Link>
             </div>
 

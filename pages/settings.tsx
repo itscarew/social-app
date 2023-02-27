@@ -3,7 +3,7 @@ import Layout from '@/components/Layout'
 import Input from '@/components/Input'
 import Button from '@/components/Button'
 import Link from 'next/link'
-import { getMyUser } from '@/functions'
+import { getAUser } from '@/functions'
 import { useState, useEffect } from "react"
 import { collection, doc, getDoc, setDoc } from 'firebase/firestore'
 import { dataBase } from '@/utils/firebaseConfig'
@@ -18,7 +18,7 @@ export default function Settings() {
 
     const subscribe = async () => {
         if (authUser.uid) {
-            const myUser = await getMyUser(authUser.uid)
+            const myUser = await getAUser(authUser.uid)
             setData({
                 ...data,
                 name: myUser.data()?.name,

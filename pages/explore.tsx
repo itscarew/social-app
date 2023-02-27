@@ -1,9 +1,7 @@
 import Layout from '@/components/Layout'
 import ExploreCard from '@/components/ExploreCardComponent'
 import { useState, useEffect } from "react"
-import { getUserPosts, getAllPosts } from "@/functions";
-import { useSelector, useDispatch } from 'react-redux'
-import type { RootState } from '../store/index'
+import { getAllPosts } from "@/functions";
 
 export default function Explore() {
     const [posts, setPosts] = useState<any>([])
@@ -25,17 +23,11 @@ export default function Explore() {
 
                         {posts.map((post) => {
                             return (
-                                <ExploreCard key={post.id} posts={post.data()} />
+                                <ExploreCard key={post.id} post={post.data()} postId={post.id} />
                             )
                         })}
                     </div>
-
                 </div>
-
-
-
-
-
             </Layout>
         </>
     )

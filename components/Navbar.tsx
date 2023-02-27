@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import Input from "./Input";
-import { AiOutlineHome, AiOutlineUser, AiOutlineNotification, AiOutlineSetting, AiOutlineLogout, AiOutlineMenu } from "react-icons/ai"
+import { AiOutlineHome, AiOutlineUser, AiOutlineNotification, AiOutlineSetting, AiOutlineLogout } from "react-icons/ai"
 import { BiMessageSquareAdd } from "react-icons/bi"
 import { CiSearch } from "react-icons/ci";
 import Modal from "./modal";
@@ -11,11 +11,14 @@ import CreatePostComponent from "./CreatePostComponen";
 import { getAuth } from "firebase/auth";
 import { app } from "@/utils/firebaseConfig";
 import { RootState } from "@/store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { closeModal, openModal } from "@/store/slice/modalSlice";
 
 export default function NavBar() {
+    const dispatch = useDispatch()
     const auth = getAuth(app);
     const authUser = useSelector((state: RootState) => state.user)
+    const modal = useSelector((state: RootState) => state.modal.modal)
     const router = useRouter();
     const routes = [
         { name: "Home", icon: <AiOutlineHome size={20} />, href: "/" },
@@ -25,9 +28,8 @@ export default function NavBar() {
         { name: "Settings", icon: <AiOutlineSetting size={20} />, href: "/settings" },
     ]
 
-    const [isOpen, setIsOpen] = useState<boolean>(false)
     const handleCreate = () => {
-        setIsOpen(true)
+        dispatch(openModal())
     }
 
     const handleSignOut = () => auth.signOut();
@@ -60,7 +62,7 @@ export default function NavBar() {
                     </Link>
                     <Link href={"/profile"} >
                         <p> {authUser.authUser?.email} </p>
-                        <p className="text-green-400" > verified </p>
+                        <p className="text-green-400" > online </p>
                     </Link>
                 </div>
                 <div className=" cursor-pointer" onClick={handleSignOut} >
@@ -68,7 +70,7 @@ export default function NavBar() {
                 </div>
             </div>
 
-            <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Create new post" className="max-w-4xl" >
+            <Modal isOpen={modal} onClose={() => dispatch(closeModal())} title="Create new post" className="max-w-4xl" >
                 <CreatePostComponent />
             </Modal>
         </nav>

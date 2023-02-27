@@ -1,14 +1,17 @@
 import Image from "next/image";
 import { FcStackOfPhotos } from "react-icons/fc"
 import Button from "./Button";
-import { useState, useEffect } from "react"
-import { getStorage, getBytes, ref, uploadBytesResumable, getDownloadURL, } from "firebase/storage"
+import { useState } from "react"
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
 import { TfiClose } from "react-icons/tfi"
 import { app, dataBase, storage } from "@/utils/firebaseConfig";
-import { addDoc, collection, setDoc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { closeModal } from "@/store/slice/modalSlice";
 
 export default function CreatePostComponent() {
+    const dispatch = useDispatch()
     const auth = getAuth(app);
     const [post, setPost] = useState({ text: "", picture: "", pictureUrl: null })
 
@@ -40,7 +43,8 @@ export default function CreatePostComponent() {
             text,
             location: "",
             picture: downloadURL,
-            userId: auth.currentUser.uid
+            userId: auth.currentUser.uid,
+            createAt: Date.now()
         };
         const postCollection = collection(dataBase, 'posts');
         const docRef = await addDoc(postCollection, newPost);
@@ -51,7 +55,7 @@ export default function CreatePostComponent() {
 
     const creatPost = async () => {
         const postId = await submitPost(post.text, post.picture);
-        console.log(`Post submitted with ID: ${postId}`);
+        dispatch(closeModal())
     };
 
 

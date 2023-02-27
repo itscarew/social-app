@@ -3,7 +3,7 @@ import FeedCard from '@/components/FeedCompoonent'
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { useEffect, useState } from 'react';
-import { getAllPosts, getMyUser } from '@/functions';
+import { getAUser, getPostsOfFollowing } from '@/functions';
 
 export default function Home() {
   const authUser = useSelector((state: RootState) => state.user.authUser)
@@ -12,13 +12,9 @@ export default function Home() {
 
   const following: [] = myUser?.following;
 
-  const followingPosts = following?.map(id => posts?.filter(obj => obj.data().userId === id))
-
   const subscribe = async () => {
     if (authUser?.uid) {
-      const user = await getMyUser(authUser?.uid);
-      const posts = await getAllPosts()
-      setPosts(posts)
+      const user = await getAUser(authUser?.uid);
       setMyUser(user.data())
     }
   }
@@ -26,16 +22,24 @@ export default function Home() {
   useEffect(() => {
     subscribe()
   }, [authUser?.uid])
+
+
+  const subscribeFollowing = async () => {
+    const posts = await getPostsOfFollowing(following)
+    setPosts(posts)
+  }
+
+  useEffect(() => {
+    subscribeFollowing()
+  }, [following])
+
   return (
     <>
       <Layout>
         <div className="w-full min-h-screen p-4">
-
-          {followingPosts && followingPosts[0]?.map((post) => {
-            return <FeedCard key={post.id} post={post.data()} />
+          {posts?.map((post) => {
+            return <FeedCard key={post.id} post={post.data()} postId={post.id} authUserId={authUser.uid} />
           })}
-
-
         </div>
       </Layout>
     </>
