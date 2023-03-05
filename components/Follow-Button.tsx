@@ -17,8 +17,10 @@ export default function FollowButton({ user, buttonType }: Partial<ButtonProps>)
         setMyUser(user.data())
     }
     useEffect(() => {
-        subscribe()
-    }, [])
+        if (authUser?.uid) {
+            subscribe()
+        }
+    }, [authUser?.uid])
 
     const checkFollowing = (userId) => {
         const following: [] = myUser?.following;

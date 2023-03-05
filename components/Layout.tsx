@@ -5,9 +5,12 @@ import React from "react";
 import { useRouter } from "next/router"
 import Suggestions from './Suggestions';
 import AuthComponent from './AuthComponent';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 export default function Layout({ children }: any) {
     const router = useRouter()
+    const authUser = useSelector((state: RootState) => state.user.authUser)
     return (
         <>
             <AppHead />
@@ -17,7 +20,7 @@ export default function Layout({ children }: any) {
                 </div>
 
                 <div className={`md:flex py-12 md:py-0 min-h-screen font-body mx-auto font-medium text-base`} >
-                    <NavBar />
+                    {authUser?.uid && <NavBar />}
                     <div className='md:flex-1 w-full  py-10 bg-gray-50  leading-none'>
                         {children}
                     </div>

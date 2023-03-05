@@ -44,7 +44,7 @@ export default function CreatePostComponent() {
             location: "",
             picture: downloadURL,
             userId: auth.currentUser.uid,
-            createAt: Date.now()
+            createdAt: Date.now()
         };
         const postCollection = collection(dataBase, 'posts');
         const docRef = await addDoc(postCollection, newPost);

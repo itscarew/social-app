@@ -41,7 +41,7 @@ export default function Followers() {
                     <div className='  max-w-screen-sm px-10 bg-white py-6 mx-4  rounded-lg md:mx-auto border-1' >
                         <h1 className='text-lg mb-3' >Followers</h1>
                         {users?.map((user) => {
-                            return <SuggestCard key={user.id} user={user.data()} showHandle />
+                            return <SuggestCard key={user.id} user={user.data()} userId={user.id} showHandle />
                         })}
                     </div>
                 </div>

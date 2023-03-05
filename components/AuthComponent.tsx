@@ -44,7 +44,7 @@ export default function AuthComponent() {
                 // router.push("/")
             } else {
                 dispatch(setAuthUser(null))
-                router.push("/auth")
+                // router.push("/auth")
             }
         });
         return () => unsubscribe();

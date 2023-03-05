@@ -4,10 +4,28 @@ import { AiOutlineSetting } from "react-icons/ai"
 import Link from "next/link";
 import { useRouter } from 'next/router'
 import FollowButton from "./Follow-Button";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { useEffect, useState } from "react";
+import { getAUser } from "@/functions";
 
 export default function ProfileComponent({ user, posts }) {
     const router = useRouter()
     const query = router.query
+
+    const authUser = useSelector((state: RootState) => state.user.authUser)
+    const [myUser, setMyUser] = useState<any>()
+
+    const subscribe = async () => {
+        const user = await getAUser(authUser?.uid);
+        setMyUser(user.data())
+    }
+
+    useEffect(() => {
+        if (authUser?.uid) {
+            subscribe()
+        }
+    }, [authUser?.uid])
 
     return (
         <>
@@ -23,23 +41,23 @@ export default function ProfileComponent({ user, posts }) {
                     <div className="flex flex-col pt-4 mx-auto my-auto sm:pt-0 sm:mx-0">
                         <div className="flex flex-col mx-auto sm:flex-row sm:mx-0 ">
                             <h2 className="flex pr-4 text-xl font-light text-gray-900 sm:text-3xl"> {user?.username} </h2>
-                            <div className="flex items-center">
+                            {authUser?.uid &&
+                                <div className="flex items-center">
+                                    {query.user && query.user !== myUser?.username ?
+                                        <FollowButton user={user} buttonType /> : <Link
+                                            href={"/settings"}
+                                            className="flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-transparent border border-gray-600 rounded outline-none sm:ml-2 hover:bg-dodger-blue-600 hover:text-white focus:outline-none hover:border-dodger-blue-700">Edit
+                                            profile
+                                        </Link>}
 
-                                {query.user ?
-                                    <FollowButton user={user} buttonType /> : <Link
-                                        href={"/settings"}
-                                        className="flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-transparent border border-gray-600 rounded outline-none sm:ml-2 hover:bg-dodger-blue-600 hover:text-white focus:outline-none hover:border-dodger-blue-700">Edit
-                                        profile
-                                    </Link>}
 
-
-                                {!query.user &&
-                                    <Link href={"/settings"} className="p-1 ml-2 text-gray-700 border-transparent rounded-full cursor-pointer hover:text-dodger-blue-600 focus:outline-none focus:text-gray-600"
-                                        aria-label="Notifications">
-                                        <AiOutlineSetting size={25} />
-                                    </Link>}
-
-                            </div>
+                                    {!query.user &&
+                                        <Link href={"/settings"} className="p-1 ml-2 text-gray-700 border-transparent rounded-full cursor-pointer hover:text-dodger-blue-600 focus:outline-none focus:text-gray-600"
+                                            aria-label="Notifications">
+                                            <AiOutlineSetting size={25} />
+                                        </Link>}
+                                </div>
+                            }
                         </div>
                         <div className="flex items-center justify-between mt-3 space-x-2">
                             <div className="flex"><span className="mr-1 font-semibold"> {posts.length}  </span> Post</div>

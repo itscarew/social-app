@@ -11,14 +11,16 @@ export default function UserProfile() {
 
     const subscribe = async () => {
         const user = await getAUserByUsername(router.query?.user)
-        const userPosts = await getUserPosts(user?.id || "")
+        const userPosts = await getUserPosts(user?.id)
         setUser(user.data())
         setPosts(userPosts)
     }
 
     useEffect(() => {
-        subscribe();
-    }, [])
+        if (router.query?.user) {
+            subscribe();
+        }
+    }, [router.query?.user])
 
     return (
         <>

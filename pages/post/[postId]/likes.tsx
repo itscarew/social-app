@@ -34,8 +34,6 @@ export default function Following() {
         subscribeLikes()
     }, [likes])
 
-    console.log(users, likes)
-
     return (
         <>
             <Layout>
