@@ -31,7 +31,8 @@ export default function Layout({ children }: any) {
                         </div>}
 
                 </div>
-                <AuthComponent />
+                {!authUser?.uid && <AuthComponent />}
+                {/* <AuthComponent /> */}
             </div>
         </>
     )

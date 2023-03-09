@@ -23,14 +23,14 @@ export default function LikeButton({ post, postId, addLikeCount, removeLikeCount
     const [liked, setLiked] = useState<any>({ [postId]: null })
 
     useEffect(() => {
-        if (authUser.uid && checkLikes()) {
+        if (authUser?.uid && checkLikes()) {
             setLiked({ [postId]: checkLikes() })
         }
 
-    }, [authUser.uid, checkLikes()])
+    }, [authUser?.uid, checkLikes()])
 
     const unlike = () => {
-        unlikeAPost(postId, authUser.uid)
+        unlikeAPost(postId, authUser?.uid)
         setLiked({ ...liked, [postId]: null })
         removeLikeCount()
 
@@ -38,7 +38,7 @@ export default function LikeButton({ post, postId, addLikeCount, removeLikeCount
 
     const like = () => {
         likeAPost(postId, authUser?.uid)
-        setLiked({ ...liked, [postId]: authUser.uid })
+        setLiked({ ...liked, [postId]: authUser?.uid })
         addLikeCount()
     }
 

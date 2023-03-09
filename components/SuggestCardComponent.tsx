@@ -18,7 +18,7 @@ export default function SuggestCard({ user, userId, showHandle }: Partial<any>) 
                 </Link>
             </div>
 
-            {authUser?.uid && <> {userId !== authUser.uid && <FollowButton user={user} />} </>}
+            {authUser?.uid && <> {userId !== authUser?.uid && <FollowButton user={user} />} </>}
         </div>
 
     )

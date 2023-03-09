@@ -4,21 +4,22 @@ import { useState, useEffect } from "react"
 import { useSelector } from 'react-redux'
 import { getOtherUsers } from "@/functions";
 import { RootState } from "@/store";
+import withAuth from '@/components/HOC/WithAuth';
 
-export default function ExplorePeople() {
+export default withAuth(function ExplorePeople() {
     const authUser = useSelector((state: RootState) => state.user.authUser)
     const [users, setUsers] = useState<any[]>([])
 
     const subscribe = async () => {
-        if (authUser.uid) {
-            const users = await getOtherUsers(authUser.uid)
+        if (authUser?.uid) {
+            const users = await getOtherUsers(authUser?.uid)
             setUsers(users)
         }
     }
 
     useEffect(() => {
         subscribe();
-    }, [authUser.uid])
+    }, [authUser?.uid])
 
     return (
         <>
@@ -34,4 +35,4 @@ export default function ExplorePeople() {
             </Layout>
         </>
     )
-}
+})

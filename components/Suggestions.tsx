@@ -14,7 +14,7 @@ export default function Suggestions() {
     const [myUser, setMyUser] = useState<any>()
 
     const subscribe = async () => {
-        if (authUser.uid) {
+        if (authUser?.uid) {
             const myUser = await getAUser(authUser?.uid)
             const users = await getOtherUsers(authUser?.uid)
             setMyUser(myUser.data())
@@ -24,7 +24,7 @@ export default function Suggestions() {
 
     useEffect(() => {
         subscribe();
-    }, [authUser.uid])
+    }, [authUser?.uid])
 
 
     return (

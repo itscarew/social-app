@@ -1,7 +1,8 @@
+import withAuth from '@/components/HOC/WithAuth'
 import Layout from '@/components/Layout'
 import NotificationCard from '@/components/NotificationComponents'
 
-export default function Notification() {
+export default withAuth(function Notification() {
     return (
         <>
             <Layout>
@@ -17,4 +18,4 @@ export default function Notification() {
             </Layout>
         </>
     )
-}
+})

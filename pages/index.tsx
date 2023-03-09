@@ -6,8 +6,9 @@ import { useEffect, useState } from 'react';
 import { getAUser, getPostsOfFollowing, getUserPosts } from '@/functions';
 import Button from '@/components/Button';
 import { openModal } from '@/store/slice/modalSlice';
+import withAuth from '@/components/HOC/WithAuth';
 
-export default function Home() {
+export default withAuth(function Home() {
   const dispatch = useDispatch()
   const authUser = useSelector((state: RootState) => state.user.authUser)
   const [myUser, setMyUser] = useState<any>()
@@ -53,7 +54,7 @@ export default function Home() {
 
           {postsToShow.length > 1 ?
             postsToShow?.map((post) => {
-              return <FeedCard key={post.id} post={post.data()} postId={post.id} authUserId={authUser.uid} />
+              return <FeedCard key={post.id} post={post.data()} postId={post.id} authUserId={authUser?.uid} />
             }) :
             <div className='text-center text-2xl font-thin flex flex-col justify-center items-center ' >
               <p>Your posts and posts of people you follow will appear here !. </p>
@@ -63,4 +64,4 @@ export default function Home() {
       </Layout>
     </>
   )
-}
+})

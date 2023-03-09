@@ -41,7 +41,7 @@ export const getAUserByUsername = async (username) => {
 };
 
 export const getOtherUsers = async (authUserId) => {
-  console.log(authUser.uid);
+  console.log(authUser?.uid);
   try {
     const users = query(userCollection, where("uid", "!=", authUserId || ""));
     const res = await getDocs(users);

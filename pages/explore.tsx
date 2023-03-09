@@ -3,9 +3,10 @@ import ExploreCard from '@/components/ExploreCardComponent'
 import { useState, useEffect } from "react"
 import { getAllPosts } from "@/functions";
 import Skeleton from 'react-loading-skeleton'
+import withAuth from '@/components/HOC/WithAuth';
 
 
-export default function Explore() {
+export default withAuth(function Explore() {
     const [posts, setPosts] = useState<any>([])
 
 
@@ -35,4 +36,4 @@ export default function Explore() {
             </Layout>
         </>
     )
-}
+})

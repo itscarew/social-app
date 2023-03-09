@@ -13,6 +13,7 @@ import { app } from "@/utils/firebaseConfig";
 import { RootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal, openModal } from "@/store/slice/modalSlice";
+import { clearAUthUser, setAuthUser } from "@/store/slice/authSlice";
 
 export default function NavBar() {
     const dispatch = useDispatch()
@@ -32,7 +33,11 @@ export default function NavBar() {
         dispatch(openModal())
     }
 
-    const handleSignOut = () => auth.signOut();
+    const handleSignOut = () => {
+        auth.signOut()
+        dispatch(clearAUthUser())
+        router.push("/auth")
+    };
 
     return (
         <nav className='w-72 py-10 border-r-2 border-gray-200 px-6 hidden md:block  '>

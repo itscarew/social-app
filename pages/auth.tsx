@@ -3,8 +3,9 @@ import AppHead from '@/components/Head'
 import { useEffect, useState } from 'react'
 import { getAllPosts } from '@/functions'
 import FeedCard from '@/components/FeedCompoonent'
+import withoutAuth from '@/components/HOC/WithOutAuth'
 
-export default function Auth() {
+export default withoutAuth(function Auth() {
     const [posts, setPosts] = useState<any>([])
 
     useEffect(() => {
@@ -27,4 +28,4 @@ export default function Auth() {
             </div>
         </>
     )
-}
+})

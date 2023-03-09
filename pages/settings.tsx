@@ -10,16 +10,17 @@ import { dataBase } from '@/utils/firebaseConfig'
 import { useSelector } from 'react-redux'
 import type { RootState } from '../store/index'
 import Skeleton from 'react-loading-skeleton'
+import withAuth from '@/components/HOC/WithAuth'
 
 
-export default function Settings() {
+export default withAuth(function Settings() {
     const authUser = useSelector((state: RootState) => state.user.authUser)
     const [data, setData] = useState({ name: "", username: "", email: "", bio: "", phone: "", website: "" })
 
 
     const subscribe = async () => {
-        if (authUser.uid) {
-            const myUser = await getAUser(authUser.uid)
+        if (authUser?.uid) {
+            const myUser = await getAUser(authUser?.uid)
             setData({
                 ...data,
                 name: myUser.data()?.name,
@@ -33,7 +34,7 @@ export default function Settings() {
     }
     useEffect(() => {
         subscribe();
-    }, [authUser.uid])
+    }, [authUser?.uid])
 
     const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value })
@@ -118,4 +119,4 @@ export default function Settings() {
             </Layout>
         </>
     )
-}
+})
