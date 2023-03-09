@@ -9,6 +9,7 @@ import { RootState } from "@/store";
 import { useEffect, useState } from "react";
 import { getAUser } from "@/functions";
 import Skeleton from "react-loading-skeleton";
+import { ImFileEmpty } from "react-icons/im"
 
 export default function ProfileComponent({ user, posts }) {
     const router = useRouter()
@@ -78,11 +79,14 @@ export default function ProfileComponent({ user, posts }) {
             </div>
 
             <div className="max-w-screen-lg py-6 md:mx-auto flex items-start flex-wrap "  >
-                {posts.map((post) => {
+                {posts.length > 1 ? posts.map((post) => {
                     return (
                         <ExploreCard key={post.id} post={post.data()} postId={post.id} height="h-80" />
                     )
-                })}
+                }) : <div className='w-full text-center text-2xl font-thin flex flex-col justify-center items-center ' >
+                    <p className="mb-8" >Nothing to show here. </p>
+                    <ImFileEmpty size={80} />
+                </div>}
             </div>
         </>
     )
