@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { useEffect, useState } from 'react';
 import { getAUser, getPostsOfFollowing, getUserPosts } from '@/functions';
+import Skeleton from 'react-loading-skeleton'
 
 export default function Home() {
   const authUser = useSelector((state: RootState) => state.user.authUser)
@@ -38,11 +39,12 @@ export default function Home() {
     subscribeFollowing()
   }, [following])
 
+  const postsToShow = posts ? [...posts, ...userPosts] : [...userPosts]
   return (
     <>
       <Layout>
         <div className="w-full min-h-screen p-4">
-          {[...posts, ...userPosts]?.map((post) => {
+          {postsToShow?.map((post) => {
             return <FeedCard key={post.id} post={post.data()} postId={post.id} authUserId={authUser.uid} />
           })}
         </div>

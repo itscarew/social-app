@@ -9,6 +9,7 @@ export default function UserProfile() {
     const [user, setUser] = useState<any>()
     const [posts, setPosts] = useState<any>([])
 
+
     const subscribe = async () => {
         const user = await getAUserByUsername(router.query?.user)
         const userPosts = await getUserPosts(user?.id)

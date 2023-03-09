@@ -2,15 +2,19 @@ import Layout from '@/components/Layout'
 import ExploreCard from '@/components/ExploreCardComponent'
 import { useState, useEffect } from "react"
 import { getAllPosts } from "@/functions";
+import Skeleton from 'react-loading-skeleton'
+
 
 export default function Explore() {
     const [posts, setPosts] = useState<any>([])
 
+
+    const subscribe = async () => {
+        const posts = await getAllPosts()
+        setPosts(posts)
+    }
+
     useEffect(() => {
-        const subscribe = async () => {
-            const posts = await getAllPosts()
-            setPosts(posts)
-        }
         subscribe();
     }, [])
 

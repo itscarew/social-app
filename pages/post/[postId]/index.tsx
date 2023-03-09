@@ -12,6 +12,7 @@ import LikeButton from '@/components/Like-Button'
 import { RootState } from '@/store'
 import { useSelector } from 'react-redux'
 import moment from 'moment'
+import Skeleton from 'react-loading-skeleton'
 
 export default function SinglePost() {
     const authUser = useSelector((state: RootState) => state.user.authUser)
@@ -21,6 +22,8 @@ export default function SinglePost() {
     const [post, setPost] = useState<any>()
     const [user, setUser] = useState<any>()
     const [myUser, setMyUser] = useState<any>()
+
+    const [loading, setLoading] = useState<boolean>(false)
 
     const [comment, setComment] = useState<string>()
     const [likeCount, setLikeCount] = useState<any>()
@@ -48,14 +51,21 @@ export default function SinglePost() {
     }
 
     const subscribe = async () => {
-        const post = await getAPost(postId)
-        const user = await getAUser(post?.data()?.userId)
-        if (authUser?.uid) {
-            const myUser = await getAUser(authUser?.uid)
-            setMyUser(myUser.data())
+        setLoading(true)
+        try {
+            const post = await getAPost(postId)
+            const user = await getAUser(post?.data()?.userId)
+            if (authUser?.uid) {
+                const myUser = await getAUser(authUser?.uid)
+                setMyUser(myUser.data())
+            }
+            setUser(user.data())
+            setPost(post.data())
+            setLoading(false)
+        } catch (error) {
+            setLoading(false)
         }
-        setUser(user.data())
-        setPost(post.data())
+
     }
 
     useEffect(() => {
@@ -81,23 +91,23 @@ export default function SinglePost() {
             <Modal isOpen={!!postId} onClose={() => router.back()} className="max-w-6xl" >
                 <div className="relative flex h-[43rem]" >
                     <div className="relative w-6/12" >
-                        <Image src={post?.picture} alt={post?.picture} fill style={{ objectFit: "contain" }} />
+                        {post?.picture ? <Image src={post?.picture} alt={post?.picture} fill style={{ objectFit: "contain" }} /> : <Skeleton height={"100%"} width={"100%"} />}
                     </div>
                     <div className="relative flex-1 p-4  overflow-y-scroll  " >
                         <div className="flex items-center text-base border-b border-gray-200 py-2 " >
                             <div className="relative  rounded-full overflow-hidden w-12 h-12 mr-2" >
-                                <Image src={user?.avatar} alt={user?.avatar} fill style={{ objectFit: "cover" }} />
+                                {user?.avatar ? <Image src={user?.avatar} alt={user?.avatar} fill style={{ objectFit: "cover" }} /> : <Skeleton height={50} width={50} borderRadius={50} />}
                             </div>
-                            <p className="font-normal"> {user?.username} </p>
+                            <p className="font-normal"> {user?.username || <Skeleton height={15} width={90} />} </p>
                         </div>
 
                         <div className='my-6' >
                             <div className='flex items-start justify-between text-base py-0' >
                                 <div className="relative rounded-full overflow-hidden w-12 h-12 mr-2" >
-                                    <Image src={user?.avatar} alt={user?.avatar} fill style={{ objectFit: "cover" }} />
+                                    {user?.avatar ? <Image src={user?.avatar} alt={user?.avatar} fill style={{ objectFit: "cover" }} /> : <Skeleton height={50} width={50} borderRadius={50} />}
                                 </div>
                                 <div className="font-semibold w-[88%]">
-                                    <Link href={`/${user?.username}`}> {user?.username} </Link>
+                                    <Link href={`/${user?.username}`}> {user?.username || <Skeleton height={15} width={90} />} </Link>
                                     <span className='font-normal'>
                                         {post?.text}
                                     </span>

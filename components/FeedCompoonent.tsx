@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { commentOnPost, getAUser } from "@/functions";
 import LikeButton from "./Like-Button";
 import moment from "moment";
+import Skeleton from 'react-loading-skeleton'
 
 export default function FeedCard({ post, postId, authUserId }: Partial<any>) {
     const router = useRouter()
@@ -59,14 +60,14 @@ export default function FeedCard({ post, postId, authUserId }: Partial<any>) {
     return (
         <div className="bg-white border rounded-sm mx-auto mb-8 pb-2 ">
             <div className="flex items-center px-4 py-3">
-                <Image className="h-8 w-8 rounded-full" src={user?.avatar} alt="#" width={50} height={50} />
+                {user?.avatar ? <Image className="h-8 w-8 rounded-full" src={user?.avatar} alt={user?.avatar} width={50} height={50} /> : <Skeleton height={50} width={50} borderRadius={50} />}
                 <div className="ml-3 ">
-                    <Link href={`/${user?.username}`} className="text-sm font-semibold antialiased block leading-tight"> {user?.username} <span> &#x2022;  {post?.createdAt && moment(post?.createdAt).startOf("milliseconds").fromNow()} </span> </Link>
+                    {user?.username ? <Link href={`/${user?.username}`} className="text-sm font-semibold antialiased block leading-tight"> {user?.username} <span> &#x2022;  {post?.createdAt && moment(post?.createdAt).startOf("milliseconds").fromNow()} </span> </Link> : <Skeleton height={15} width={90} />}
                     <p className="text-gray-600 text-xs block">{post?.location}</p>
                 </div>
             </div>
             <div className="w-full relative " style={{ height: "40rem" }} >
-                <Image alt={post?.picture} src={post?.picture} fill style={{ objectFit: "contain", objectPosition: "center" }} />
+                {post?.picture ? <Image alt={post?.picture} src={post?.picture} fill style={{ objectFit: "contain", objectPosition: "center" }} /> : <Skeleton height={"40rem"} width={"100%"} />}
             </div>
             {authUserId &&
                 <div className="flex items-center justify-between mx-4 mt-3 mb-2">
@@ -79,10 +80,10 @@ export default function FeedCard({ post, postId, authUserId }: Partial<any>) {
                         <svg className=" cursor-pointer" fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path d="M43.5 48c-.4 0-.8-.2-1.1-.4L24 29 5.6 47.6c-.4.4-1.1.6-1.6.3-.6-.2-1-.8-1-1.4v-45C3 .7 3.7 0 4.5 0h39c.8 0 1.5.7 1.5 1.5v45c0 .6-.4 1.2-.9 1.4-.2.1-.4.1-.6.1zM24 26c.8 0 1.6.3 2.2.9l15.8 16V3H6v39.9l15.8-16c.6-.6 1.4-.9 2.2-.9z"></path></svg>
                     </div>
                 </div>}
-            <Link href={`/post/${postId}/likes`} className="font-semibold text-sm mx-4 mt-2 mb-1"> {likeCount}  likes</Link>
+            <Link href={`/post/${postId}/likes`} className="font-semibold text-sm mx-4 mt-2 mb-1"> {likeCount ? `${likeCount} likes ` : <Skeleton height={15} width={90} />}  </Link>
             <div className='flex items-start justify-between text-base py-0 mx-4' >
-                <p className="font-semibold w-[88%]"> <Link href={`/${user?.username}`}  > {user?.username} </Link> <span className='font-normal'> {post?.text} </span>
-                </p>
+                {post?.text ? <p className="font-semibold w-[88%]"> <Link href={`/${user?.username}`}  > {user?.username} </Link> <span className='font-normal'> {post?.text} </span>
+                </p> : <Skeleton height={15} width={90} />}
             </div>
             {post.comments && <Link href={`/post/${postId}`} className="font-semibold text-gray-500 text-sm mx-4 mt-0 mb-1"> {post.comments?.length > 1 ? `View all ${post?.comments?.length} comments` : `View ${post?.comments?.length} comment`}  </Link>}
             {authUserId &&

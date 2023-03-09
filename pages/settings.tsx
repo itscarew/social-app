@@ -9,6 +9,7 @@ import { collection, doc, getDoc, setDoc } from 'firebase/firestore'
 import { dataBase } from '@/utils/firebaseConfig'
 import { useSelector } from 'react-redux'
 import type { RootState } from '../store/index'
+import Skeleton from 'react-loading-skeleton'
 
 
 export default function Settings() {
@@ -62,11 +63,11 @@ export default function Settings() {
                     <div className='max-w-screen-lg px-10 py-6 mx-4 bg-white rounded-lg shadow md:mx-auto border-1' >
                         <div className="flex items-centerr text-base py-6 " >
                             <Link href={"/profile"} className="relative  rounded-full overflow-hidden w-14 h-14 mr-2" >
-                                <Image src={authUser.photoURL} alt={authUser.authUser?.photoURL} fill style={{ objectFit: "cover" }} />
+                                {authUser.photoURL ? <Image src={authUser.photoURL} alt={authUser.photoURL} fill style={{ objectFit: "cover" }} /> : <Skeleton height={50} width={50} borderRadius={50} />}
                             </Link>
                             <Link href={"/profile"}>
-                                <p className='font-normal' > {data?.name} </p>
-                                <p className="font-normal " > {data?.username} </p>
+                                <p className='font-normal' > {data?.name || <Skeleton height={15} width={90} />} </p>
+                                <p className="font-normal " > {data?.username || <Skeleton height={15} width={90} />} </p>
                             </Link>
                         </div>
                         <form onSubmit={update}>

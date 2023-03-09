@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { useEffect, useState } from "react";
 import { getAUser } from "@/functions";
+import Skeleton from "react-loading-skeleton";
 
 export default function ProfileComponent({ user, posts }) {
     const router = useRouter()
@@ -33,9 +34,12 @@ export default function ProfileComponent({ user, posts }) {
                 <div className="flex flex-col items-start w-full m-auto sm:flex-row">
                     <div className="flex mx-auto sm:mr-10 sm:m-0">
                         <div className="relative items-center justify-center w-20 h-20 m-auto mr-4 sm:w-32 sm:h-32">
-                            <Image alt="avatar"
-                                src={user?.avatar}
-                                className="object-cover w-20 h-20 mx-auto rounded-full sm:w-32 sm:h-32" fill />
+                            {user?.avatar ?
+                                <Image alt="avatar"
+                                    src={user?.avatar}
+                                    className="object-cover w-20 h-20 mx-auto rounded-full sm:w-32 sm:h-32" fill /> :
+                                <Skeleton height={120} width={120} borderRadius={60} />}
+
                         </div>
                     </div>
                     <div className="flex flex-col pt-4 mx-auto my-auto sm:pt-0 sm:mx-0">

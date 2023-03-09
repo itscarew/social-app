@@ -52,7 +52,7 @@ export default function AuthComponent() {
 
     return (
         <>
-            <div className='flex items-center justify-center  fixed bottom-0 left-0 h-32 w-full bg-black opacity-80' >
+            <div className='flex items-center justify-center  fixed bottom-0 left-0 h-32 w-full bg-black opacity-80 z-50 ' >
                 <Button className=' bg-dodger-blue-500 text-white px-12  py-3' onClick={signIn} >Sign In</Button>
             </div>
         </>

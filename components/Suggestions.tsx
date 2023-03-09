@@ -6,6 +6,7 @@ import { useState, useEffect } from "react"
 import { useSelector } from 'react-redux'
 import { getAUser, getOtherUsers } from "@/functions";
 import { RootState } from "@/store";
+import Skeleton from "react-loading-skeleton";
 
 export default function Suggestions() {
     const authUser = useSelector((state: RootState) => state.user.authUser)
@@ -30,11 +31,11 @@ export default function Suggestions() {
         <div>
             <div className="flex items-center text-base py-6 " >
                 <Link href={"/profile"} className="relative  rounded-full overflow-hidden w-14 h-14 mr-2" >
-                    <Image src={myUser?.avatar} alt="#" fill style={{ objectFit: "cover" }} />
+                    {myUser?.avatar ? <Image src={myUser?.avatar} alt="#" fill style={{ objectFit: "cover" }} /> : <Skeleton height={50} width={50} borderRadius={50} />}
                 </Link>
                 <Link href={`/profile`} >
-                    <p className=' font-medium ' > {myUser?.name} </p>
-                    <p className="font-normal" > {myUser?.username} </p>
+                    <p className=' font-medium ' > {myUser?.name || <Skeleton height={15} width={90} />} </p>
+                    <p className="font-normal" > {myUser?.username || <Skeleton height={15} width={90} />} </p>
                 </Link>
             </div>
 

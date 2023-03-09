@@ -22,7 +22,7 @@ export default function HeaderNavBar({ children }: any) {
     const routes = [
         { name: "Home", icon: <AiOutlineHome />, href: "/" },
         { name: "Explore", icon: <AiOutlineUser />, href: "#" },
-        { name: "Notification", icon: <AiOutlineNotification />, href: "#" },
+        // { name: "Notification", icon: <AiOutlineNotification />, href: "#" },
         { name: "Create", icon: <BiMessageSquareAdd />, href: "#" },
         { name: "Settings", icon: <AiOutlineSetting />, href: "#" },
     ]

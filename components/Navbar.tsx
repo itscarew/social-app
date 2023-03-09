@@ -23,7 +23,7 @@ export default function NavBar() {
     const routes = [
         { name: "Home", icon: <AiOutlineHome size={20} />, href: "/" },
         { name: "Explore", icon: <AiOutlineUser size={20} />, href: "/explore" },
-        { name: "Notification", icon: <AiOutlineNotification size={20} />, href: "/notification" },
+        // { name: "Notification", icon: <AiOutlineNotification size={20} />, href: "/notification" },
         { name: "Create", icon: <BiMessageSquareAdd size={20} />, href: "#" },
         { name: "Settings", icon: <AiOutlineSetting size={20} />, href: "/settings" },
     ]
