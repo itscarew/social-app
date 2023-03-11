@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux'
 import type { RootState } from '../store/index'
 import Skeleton from 'react-loading-skeleton'
 import withAuth from '@/components/HOC/WithAuth'
+import { AiOutlineCheck } from "react-icons/ai"
 
 
 export default withAuth(function Settings() {
@@ -40,6 +41,7 @@ export default withAuth(function Settings() {
         setData({ ...data, [e.target.name]: e.target.value })
     }
 
+    const [updated, setUpdated] = useState<boolean>(false)
     const userCollection = collection(dataBase, 'users');
     const update = async (e) => {
         e.preventDefault()
@@ -54,8 +56,17 @@ export default withAuth(function Settings() {
                 email: data.email,
                 phone: data.phone
             }, { merge: true })
+            setUpdated(true)
         }
     }
+
+    useEffect(() => {
+        setTimeout(() => {
+            setUpdated(false)
+        }, 2000)
+    }, [updated])
+
+    console.log(updated)
 
     return (
         <>
@@ -112,7 +123,7 @@ export default withAuth(function Settings() {
                                     onChange={handleChange} rounded className="pl-2 border-2 " /></div>
                             </div>
 
-                            <Button className=' bg-dodger-blue-500 text-white  py-4 px-16' >Submit</Button>
+                            <Button className={`${updated ? "bg-green-500" : "bg-dodger-blue-500"} text-white h-11 w-32`} > {updated ? <AiOutlineCheck size={25} /> : "Submit"} </Button>
                         </form>
                     </div>
                 </div>

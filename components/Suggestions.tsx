@@ -43,7 +43,7 @@ export default function Suggestions() {
                 <p className="text-gray-500" >Suggetions for you</p>
                 <Link href={"/explore-people"} >See All </Link>
             </div>
-            {users?.map((user) => {
+            {users?.slice(0, 5).map((user) => {
                 return <SuggestCard key={user.id} user={user.data()} />
             })}
         </div>

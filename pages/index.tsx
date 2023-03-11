@@ -11,6 +11,7 @@ import withAuth from '@/components/HOC/WithAuth';
 export default withAuth(function Home() {
   const dispatch = useDispatch()
   const authUser = useSelector((state: RootState) => state.user.authUser)
+  const modal = useSelector((state: RootState) => state.modal.modal)
   const [myUser, setMyUser] = useState<any>()
   const [posts, setPosts] = useState<any>([])
   const [userPosts, setUserPosts] = useState<any>([])
@@ -40,7 +41,7 @@ export default withAuth(function Home() {
 
   useEffect(() => {
     subscribeFollowing()
-  }, [following])
+  }, [following, modal])
 
   const handleCreate = () => {
     dispatch(openModal())
