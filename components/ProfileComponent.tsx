@@ -31,7 +31,7 @@ export default function ProfileComponent({ user, posts }) {
 
     return (
         <>
-            <div className=" max-w-screen-lg px-10 py-6 mx-4 bg-white rounded-lg shadow md:mx-auto border-1">
+            <div className=" max-w-screen-lg px-10 py-6 bg-white rounded-lg shadow mx-auto border-1">
                 <div className="flex flex-col items-start w-full m-auto sm:flex-row">
                     <div className="flex mx-auto sm:mr-10 sm:m-0">
                         <div className="relative items-center justify-center w-20 h-20 m-auto mr-4 sm:w-32 sm:h-32">

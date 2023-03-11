@@ -66,14 +66,14 @@ export default withAuth(function Settings() {
         }, 2000)
     }, [updated])
 
-    console.log(updated)
+
 
     return (
         <>
             <Layout>
                 <div className="w-full min-h-screen p-4">
-                    <div className='max-w-screen-lg px-10 py-6 mx-4 bg-white rounded-lg shadow md:mx-auto border-1' >
-                        <div className="flex items-centerr text-base py-6 " >
+                    <div className='max-w-screen-lg md:px-10 px-5 py-6 bg-white rounded-lg shadow mx-auto border-1' >
+                        <div className="flex items-center text-base py-6" >
                             <Link href={"/profile"} className="relative  rounded-full overflow-hidden w-14 h-14 mr-2" >
                                 {authUser.photoURL ? <Image src={authUser.photoURL} alt={authUser.photoURL} fill style={{ objectFit: "cover" }} /> : <Skeleton height={50} width={50} borderRadius={50} />}
                             </Link>
