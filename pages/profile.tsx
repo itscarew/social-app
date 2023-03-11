@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux'
 export default withAuth(function Profile() {
     const authUser = useSelector((state: RootState) => state.user.authUser)
     const modal = useSelector((state: RootState) => state.modal.modal)
+    const change = useSelector((state: RootState) => state.change.value)
     const [posts, setPosts] = useState<any>([])
     const [myUser, setMyUser] = useState<any>()
 
@@ -23,7 +24,7 @@ export default withAuth(function Profile() {
 
     useEffect(() => {
         subscribe();
-    }, [authUser?.uid, modal])
+    }, [authUser?.uid, modal, change])
     return (
         <>
             <Layout>

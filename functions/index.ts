@@ -8,10 +8,12 @@ import {
   doc,
   getDoc,
   getDocs,
+  deleteDoc,
   query,
   updateDoc,
   where,
 } from "firebase/firestore";
+import { ref, getStorage, deleteObject } from "firebase/storage";
 
 const state = store.getState();
 const authUser = state.user.authUser;
@@ -107,6 +109,18 @@ export const unfollowAUser = async (userId) => {
     await updateDoc(followedRef, {
       followers: arrayRemove(auth.currentUser?.uid),
     });
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deletePost = async (postId, postPicture) => {
+  const storage = getStorage(app);
+  const postRef = doc(postCollection, postId);
+  const fileRef = ref(storage, postPicture);
+  try {
+    await deleteDoc(postRef);
+    await deleteObject(fileRef);
   } catch (error) {
     throw error;
   }

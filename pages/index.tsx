@@ -53,7 +53,7 @@ export default withAuth(function Home() {
       <Layout>
         <div className="w-full min-h-screen p-4">
 
-          {postsToShow.length > 1 ?
+          {postsToShow.length >= 1 ?
             postsToShow?.map((post) => {
               return <FeedCard key={post.id} post={post.data()} postId={post.id} authUserId={authUser?.uid} />
             }) :

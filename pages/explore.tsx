@@ -2,13 +2,15 @@ import Layout from '@/components/Layout'
 import ExploreCard from '@/components/ExploreCardComponent'
 import { useState, useEffect } from "react"
 import { getAllPosts } from "@/functions";
-import Skeleton from 'react-loading-skeleton'
 import withAuth from '@/components/HOC/WithAuth';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 
 export default withAuth(function Explore() {
+    const change = useSelector((state: RootState) => state.change.value)
+    const modal = useSelector((state: RootState) => state.modal.modal)
     const [posts, setPosts] = useState<any>([])
-
 
     const subscribe = async () => {
         const posts = await getAllPosts()
@@ -17,7 +19,7 @@ export default withAuth(function Explore() {
 
     useEffect(() => {
         subscribe();
-    }, [])
+    }, [modal, change])
 
 
     return (

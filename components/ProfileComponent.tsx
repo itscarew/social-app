@@ -78,7 +78,7 @@ export default function ProfileComponent({ user, posts }) {
             </div>
 
             <div className="max-w-screen-lg py-6 md:mx-auto flex items-start flex-wrap "  >
-                {posts.length > 1 ? posts.map((post) => {
+                {posts.length >= 1 ? posts.map((post) => {
                     return (
                         <ExploreCard key={post.id} post={post.data()} postId={post.id} height="h-80" />
                     )
