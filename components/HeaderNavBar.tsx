@@ -5,9 +5,17 @@ import Image from 'next/image';
 import Input from "./Input";
 import { AiOutlineHome, AiOutlineUser, AiOutlineNotification, AiOutlineSetting, AiOutlineLogout, AiOutlineMenu } from "react-icons/ai"
 import { BiMessageSquareAdd } from "react-icons/bi"
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { app } from "@/utils/firebaseConfig";
+import { getAuth } from "firebase/auth";
+import { clearAUthUser } from "@/store/slice/authSlice";
 
-export default function HeaderNavBar({ children }: any) {
+export default function HeaderNavBar() {
+    const dispatch = useDispatch()
+    const authUser = useSelector((state: RootState) => state.user)
     const router = useRouter();
+    const auth = getAuth(app);
 
     const [open, setOpen] = useState<boolean>(false)
 
@@ -20,20 +28,25 @@ export default function HeaderNavBar({ children }: any) {
     }, [router.pathname])
 
     const routes = [
-        { name: "Home", icon: <AiOutlineHome />, href: "/" },
-        { name: "Explore", icon: <AiOutlineUser />, href: "#" },
-        // { name: "Notification", icon: <AiOutlineNotification />, href: "#" },
-        { name: "Create", icon: <BiMessageSquareAdd />, href: "#" },
-        { name: "Settings", icon: <AiOutlineSetting />, href: "#" },
+        { name: "Home", icon: <AiOutlineHome size={20} />, href: "/" },
+        { name: "Explore", icon: <AiOutlineUser size={20} />, href: "/explore" },
+        // { name: "Notification", icon: <AiOutlineNotification size={20} />, href: "/notification" },
+        // { name: "Create", icon: <BiMessageSquareAdd size={20} />, href: "#" },
+        { name: "Settings", icon: <AiOutlineSetting size={20} />, href: "/settings" },
     ]
+
+    const handleSignOut = () => {
+        auth.signOut()
+        dispatch(clearAUthUser())
+        router.push("/auth")
+    };
 
     return (
         <>
-            <nav className="bg-white border-gray-200 px-2 sm:px-4 py-4 shadow-sm block md:hidden relative ">
+            <nav className="bg-white  border-gray-200 px-2 sm:px-4 py-4 shadow-sm block md:hidden relative z-40 ">
                 <div className="flex flex-wrap items-center justify-between mx-auto px-4">
-                    <Link href="/" className="flex items-center">
-                        <h1>SocialApp</h1>
-                        <span className="self-center text-xl font-semibold whitespace-nowrap  ml-3 "> Untitled UI  </span>
+                    <Link href="/" className=' text-2xl flex items-center font-medium'>
+                        <h1 className='ml-2 font-normal '>SocialApp</h1>
                     </Link>
                     <div className="flex md:order-2">
                         <div className="relative hidden md:block">
@@ -45,7 +58,7 @@ export default function HeaderNavBar({ children }: any) {
                         </button>
                     </div>
                     <div className={`items-center overflow-y-auto h-screen justify-between ${open ? "" : "hidden"} w-full md:flex md:w-auto md:order-1" id="navbar-search`}>
-                        <div className="relative mt-3 md:hidden">
+                        <div className="relative mt-3 hidden">
                             <Input />
                         </div>
                         {routes.map((route, index) => {
@@ -60,15 +73,15 @@ export default function HeaderNavBar({ children }: any) {
                         <div className="flex items-center  border-t-2 border-gray-200 justify-between text-sm py-6 " >
                             <div className="flex items-center" >
                                 <div className="relative  rounded-full overflow-hidden w-12 h-12 mr-2" >
-                                    <Image src={"/Avatar-5.png"} alt="#" fill />
+                                    <Image src={authUser.authUser?.photoURL} alt="#" fill style={{ objectFit: "cover" }} />
                                 </div>
-                                <div>
-                                    <p>Carew Hello</p>
-                                    <a className="font-normal" href="mailto:olivia@untitledui.com">olivia@untitledui.com</a>
-                                </div>
+                                <Link href={"/profile"} >
+                                    <p> {authUser.authUser?.email} </p>
+                                    <p className="text-green-400" > online </p>
+                                </Link>
                             </div>
-                            <div className=" cursor-pointer" >
-                                <AiOutlineLogout />
+                            <div className=" cursor-pointer" onClick={handleSignOut} >
+                                <AiOutlineLogout size={20} />
                             </div>
                         </div>
                     </div>

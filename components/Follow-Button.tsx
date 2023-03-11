@@ -37,6 +37,6 @@ export default function FollowButton({ user, buttonType }: Partial<ButtonProps>)
         subscribe()
     }
     return (
-        <div className={`text-sm cursor-pointer p-2 rounded-lg ${buttonType ? " bg-dodger-blue-500 text-white " : "text-dodger-blue-500 bg-transparent"} `} onClick={checkFollowing(user?.uid) ? unfollow : follow} > {checkFollowing(user?.uid) ? "Unfollow" : "Follow"}</div>
+        <div className={`text-sm cursor-pointer p-2 rounded-lg ${buttonType ? "w-full" : ""}  text-center ${buttonType ? " bg-dodger-blue-500 text-white " : "text-dodger-blue-500 bg-transparent"} `} onClick={checkFollowing(user?.uid) ? unfollow : follow} > {checkFollowing(user?.uid) ? "Unfollow" : "Follow"}</div>
     )
 }

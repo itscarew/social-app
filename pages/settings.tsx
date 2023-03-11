@@ -72,7 +72,7 @@ export default withAuth(function Settings() {
                             </Link>
                         </div>
                         <form onSubmit={update}>
-                            <div className='w-2/3 flex items-center justify-between mb-6 ' >
+                            <div className='md:w-2/3 flex items-center justify-between mb-6 ' >
                                 <label className='mr-3 text-left '>Name</label>
                                 <div className='w-4/5'>
                                     <Input value={data?.name} name={"name"}
@@ -80,18 +80,18 @@ export default withAuth(function Settings() {
                                         rounded className="pl-2 border-2 " />
                                 </div>
                             </div>
-                            <div className='w-2/3 flex items-center justify-between mb-6 ' >
+                            <div className='md:w-2/3 flex items-center justify-between mb-6 ' >
                                 <label className='mr-3 text-left'>Username</label>
                                 <div className='w-4/5'><Input value={data?.username} name={"username"}
                                     onChange={handleChange} rounded className="pl-2 border-2 " /></div>
                             </div>
-                            <div className='w-2/3 flex items-center justify-between mb-6 ' >
+                            <div className='md:w-2/3 flex items-center justify-between mb-6 ' >
                                 <label className='mr-3'>Website</label>
                                 <div className='w-4/5'><Input value={data?.website} name={"website"}
                                     onChange={handleChange} rounded className="pl-2 border-2 " /></div>
                             </div>
 
-                            <div className='w-2/3 flex items-center justify-between mb-6 ' >
+                            <div className='md:w-2/3 flex items-center justify-between mb-6 ' >
                                 <label className='mr-3'>Bio</label>
                                 <div className='w-4/5'>
                                     <textarea value={data?.bio} name={"bio"}
@@ -101,12 +101,12 @@ export default withAuth(function Settings() {
 
                             <h1 className='text-lg font-normal mb-4' >Personal Information</h1>
 
-                            <div className='w-2/3 flex items-center justify-between mb-6 ' >
+                            <div className='md:w-2/3 flex items-center justify-between mb-6 ' >
                                 <label className='mr-3'>Email Address</label>
                                 <div className='w-4/5'><Input value={data?.email} name={"email"}
                                     onChange={handleChange} rounded className="pl-2 border-2 " readOnly /></div>
                             </div>
-                            <div className='w-2/3 flex items-center justify-between mb-6 ' >
+                            <div className='md:w-2/3 flex items-center justify-between mb-6 ' >
                                 <label className='mr-3'>Phone Number</label>
                                 <div className='w-4/5'><Input value={data?.phone} name={"phone"}
                                     onChange={handleChange} rounded className="pl-2 border-2 " /></div>

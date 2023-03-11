@@ -7,6 +7,7 @@ import Suggestions from './Suggestions';
 import AuthComponent from './AuthComponent';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
+import AddPost from './AddPost';
 
 export default function Layout({ children }: any) {
     const router = useRouter()
@@ -25,14 +26,14 @@ export default function Layout({ children }: any) {
                         {children}
                     </div>
                     {router.pathname === "/" &&
-                        <div className=' py-10 border-l-2 border-gray-200 px-16 md:block ' style={{ width: "33rem" }}  >
+                        <div className=' py-10 border-l-2 border-gray-200 px-16 md:block md:w-[33rem] '   >
                             <Suggestions />
                             <div className='font-thin text-center my-6'> &copy; {new Date().getFullYear()} Olaonipekun Carew </div>
                         </div>}
 
                 </div>
                 {!authUser?.uid && <AuthComponent />}
-                {/* <AuthComponent /> */}
+                <AddPost />
             </div>
         </>
     )

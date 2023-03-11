@@ -23,8 +23,6 @@ export default function SinglePost() {
     const [user, setUser] = useState<any>()
     const [myUser, setMyUser] = useState<any>()
 
-    const [loading, setLoading] = useState<boolean>(false)
-
     const [comment, setComment] = useState<string>()
     const [likeCount, setLikeCount] = useState<any>()
     useEffect(() => {
@@ -51,21 +49,14 @@ export default function SinglePost() {
     }
 
     const subscribe = async () => {
-        setLoading(true)
-        try {
-            const post = await getAPost(postId)
-            const user = await getAUser(post?.data()?.userId)
-            if (authUser?.uid) {
-                const myUser = await getAUser(authUser?.uid)
-                setMyUser(myUser.data())
-            }
-            setUser(user.data())
-            setPost(post.data())
-            setLoading(false)
-        } catch (error) {
-            setLoading(false)
+        const post = await getAPost(postId)
+        const user = await getAUser(post?.data()?.userId)
+        if (authUser?.uid) {
+            const myUser = await getAUser(authUser?.uid)
+            setMyUser(myUser.data())
         }
-
+        setUser(user.data())
+        setPost(post.data())
     }
 
     useEffect(() => {
@@ -89,11 +80,11 @@ export default function SinglePost() {
                 </div>
             </Layout>
             <Modal isOpen={!!postId} onClose={() => router.back()} className="max-w-6xl" >
-                <div className="relative flex h-[43rem]" >
-                    <div className="relative w-6/12" >
+                <div className="relative flex md:flex-row flex-col h-[43rem]" >
+                    <div className="relative md:w-6/12 md:h-full h-3/6  " >
                         {post?.picture ? <Image src={post?.picture} alt={post?.picture} fill style={{ objectFit: "contain" }} /> : <Skeleton height={"100%"} width={"100%"} />}
                     </div>
-                    <div className="relative flex-1 p-4  overflow-y-scroll  " >
+                    <div className="relative flex-1 p-4  overflow-y-scroll md:mb-0 mb-24 " >
                         <div className="flex items-center text-base border-b border-gray-200 py-2 " >
                             <div className="relative  rounded-full overflow-hidden w-12 h-12 mr-2" >
                                 {user?.avatar ? <Image src={user?.avatar} alt={user?.avatar} fill style={{ objectFit: "cover" }} /> : <Skeleton height={50} width={50} borderRadius={50} />}
@@ -123,7 +114,7 @@ export default function SinglePost() {
                             )
                         })}
 
-                        <div className='fixed bottom-0 right-0 w-1/2  bg-white z-10 pb-2 ' >
+                        <div className='fixed bottom-0 right-0 md:w-1/2 w-full  bg-white z-10 pb-2 ' >
                             {authUser?.uid &&
                                 <div className="flex items-center justify-between mx-4 mt-3 mb-2">
                                     <div className="flex items-center gap-5">
@@ -142,7 +133,6 @@ export default function SinglePost() {
                                     <Input onChange={handleChange} value={comment} icon={<IoIosSend size={"20"} className='absolute right-3 cursor-pointer' onClick={postComment} />} placeHolder="Post a comment" className="pl-3" />
                                 </div>
                             }
-
                         </div>
                     </div>
                 </div>

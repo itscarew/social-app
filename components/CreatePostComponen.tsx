@@ -61,9 +61,9 @@ export default function CreatePostComponent() {
 
     return (
         <>
-            <div className="flex h-[30rem]" >
+            <div className="flex md:flex-row flex-col md:h-[30rem] h-auto " >
                 {!post.pictureUrl &&
-                    <div className="relative w-7/12 flex flex-col items-center justify-center" >
+                    <div className="relative md:w-7/12 w-full md:h-auto h-[25rem]  flex flex-col items-center justify-center" >
                         <FcStackOfPhotos size={120} />
                         <p className="text-xl" >Bring your photos here</p>
                         <label className=' bg-dodger-blue-500 text-white py-2 px-8 mt-4 rounded-lg cursor-pointer'>
@@ -73,14 +73,14 @@ export default function CreatePostComponent() {
                     </div>
                 }
                 {post.pictureUrl &&
-                    <div className="relative w-7/12" >
+                    <div className="relative md:w-7/12 w-full md:h-auto h-[25rem] " >
                         <div onClick={refreshPicture} className="z-30 absolute top-5 right-5 bg-slate-400 rounded-full p-2 cursor-pointer" > <TfiClose size={15} color="#fff" /> </div>
                         <div className="w-full" >
                             <Image src={post.pictureUrl} alt="#" fill style={{ objectFit: "cover" }} />
                         </div>
                     </div>
                 }
-                <div className="flex-1 p-4 " >
+                <div className="flex-1 p-4 w-full h-auto " >
                     <div className="flex items-center text-base py-6 " >
                         <div className="relative  rounded-full overflow-hidden w-12 h-12 mr-2" >
                             <Image src={"/pic1.jpeg"} alt="#" fill style={{ objectFit: "cover" }} />

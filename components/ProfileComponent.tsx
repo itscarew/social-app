@@ -39,7 +39,7 @@ export default function ProfileComponent({ user, posts }) {
                                 <Image alt="avatar"
                                     src={user?.avatar}
                                     className="object-cover w-20 h-20 mx-auto rounded-full sm:w-32 sm:h-32" fill /> :
-                                <Skeleton height={120} width={120} borderRadius={60} />}
+                                <Skeleton height={"5rem"} width={"5rem"} borderRadius={60} />}
 
                         </div>
                     </div>
@@ -54,7 +54,6 @@ export default function ProfileComponent({ user, posts }) {
                                             className="flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-transparent border border-gray-600 rounded outline-none sm:ml-2 hover:bg-dodger-blue-600 hover:text-white focus:outline-none hover:border-dodger-blue-700">Edit
                                             profile
                                         </Link>}
-
 
                                     {!query.user &&
                                         <Link href={"/settings"} className="p-1 ml-2 text-gray-700 border-transparent rounded-full cursor-pointer hover:text-dodger-blue-600 focus:outline-none focus:text-gray-600"
@@ -71,7 +70,7 @@ export default function ProfileComponent({ user, posts }) {
                         </div>
                     </div>
                 </div>
-                <div className="w-full pt-5">
+                <div className="w-full pt-5 md:text-left text-center ">
                     <h1 className="text-lg font-semibold text-gray-800 sm:text-xl"> {user?.name}</h1>
                     <p className="text-sm text-gray-800 md:text-base"> {user?.bio} </p>
                     <a href={user?.website} target="/_blank" className="text-sm text-gray-500 md:text-base">{user?.website} </a>

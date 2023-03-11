@@ -42,7 +42,7 @@ export default function NavBar() {
     return (
         <nav className='w-72 py-10 border-r-2 border-gray-200 px-6 hidden md:block  '>
             <Link href={"/"} className=' text-2xl flex items-center font-medium'>  <h1 className='ml-3 font-normal '> SocialApp </h1></Link>
-            <div className="pt-6" >
+            <div className="pt-6 hidden " >
                 <Input rounded icon={<CiSearch size={"20"} className='absolute left-3' />} placeHolder="Search" className="pl-10 border-2 " />
             </div>
             <div className=' pt-2'>

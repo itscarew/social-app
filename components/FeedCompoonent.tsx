@@ -44,7 +44,6 @@ export default function FeedCard({ post, postId, authUserId }: Partial<any>) {
         }
     }
 
-
     useEffect(() => {
         subscribe()
     }, [post?.userId])
@@ -66,7 +65,7 @@ export default function FeedCard({ post, postId, authUserId }: Partial<any>) {
                     <p className="text-gray-600 text-xs block">{post?.location}</p>
                 </div>
             </div>
-            <div className="w-full relative " style={{ height: "40rem" }} >
+            <div className="w-full relative h-[40rem]" >
                 {post?.picture ? <Image alt={post?.picture} src={post?.picture} fill style={{ objectFit: "contain", objectPosition: "center" }} /> : <Skeleton height={"40rem"} width={"100%"} />}
             </div>
             {authUserId &&
@@ -91,7 +90,5 @@ export default function FeedCard({ post, postId, authUserId }: Partial<any>) {
                     <Input onChange={handleChange} value={comment} icon={<IoIosSend size={"20"} className='absolute right-3 cursor-pointer' onClick={postComment} />} placeHolder="Post a comment" className="pl-3" />
                 </div>}
         </div>
-
-
     )
 }

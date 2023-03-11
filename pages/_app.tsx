@@ -2,10 +2,10 @@ import '@/styles/globals.css'
 import 'react-loading-skeleton/dist/skeleton.css'
 import type { AppProps } from 'next/app'
 
-import { store } from '../store/index'
-import { Provider, useDispatch } from 'react-redux'
-import { useRouter } from 'next/dist/client/router'
-import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth'
+import { persistor, store } from '../store/index'
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react';
+import { getAuth, GoogleAuthProvider, onAuthStateChanged } from 'firebase/auth'
 import { app, dataBase } from '@/utils/firebaseConfig'
 import { collection, doc, getDoc, setDoc } from 'firebase/firestore'
 import { useEffect } from 'react'
@@ -13,8 +13,6 @@ import { setAuthUser } from '@/store/slice/authSlice'
 import { createUsername } from '@/utils/userNameGenerator'
 
 export default function App({ Component, pageProps }: AppProps) {
-  const router = useRouter()
-
   const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
   provider.setCustomParameters({ prompt: "select_account" });
@@ -39,7 +37,6 @@ export default function App({ Component, pageProps }: AppProps) {
             avatar: user.photoURL
           })
         }
-        router.push("/")
       } else {
         store.dispatch(setAuthUser(undefined))
       }
@@ -49,7 +46,9 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <Provider store={store} >
-      <Component {...pageProps} />
+      <PersistGate loading={null} persistor={persistor}>
+        <Component {...pageProps} />
+      </PersistGate>
     </Provider>
   )
 }

@@ -19,7 +19,7 @@ export default withoutAuth(function Auth() {
     return (
         <>
             <AppHead />
-            <div className='max-w-screen-sm mx-auto' >
+            <div className='max-w-screen-sm mx-auto mxx:p-0 p-4' >
                 <h1 className='text-3xl font-normal text-center my-4'>  SocialApp </h1>
                 {[...posts]?.splice(0, 5).map((post) => {
                     return <FeedCard key={post.id} post={post.data()} postId={post.id} />

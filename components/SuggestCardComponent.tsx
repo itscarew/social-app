@@ -8,7 +8,7 @@ export default function SuggestCard({ user, userId, showHandle }: Partial<any>) 
     const authUser = useSelector((state: RootState) => state.user.authUser)
     return (
         <div className="flex items-center justify-between" >
-            <div className="flex items-center text-base py-1.5 " >
+            <div className="flex items-center text-base py-1.5 w-full" >
                 <Link href={`/${user?.username}`} className="relative  rounded-full overflow-hidden w-10 h-10 mr-2" >
                     <Image src={user?.avatar} alt="#" fill style={{ objectFit: "cover" }} />
                 </Link>
