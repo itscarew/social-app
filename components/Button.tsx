@@ -3,13 +3,14 @@ type ButtonProps = {
     children: any;
     style: any
     onClick: any
+    disabled: boolean
 };
 
 
-export default function Button({ className, children, style, onClick }: Partial<ButtonProps>) {
+export default function Button({ className, children, style, onClick, disabled }: Partial<ButtonProps>) {
     return (
         <>
-            <button className={`flex items-center justify-center rounded-lg px-4   ${className}`} style={style} onClick={onClick} > {children} </button>
+            <button className={`flex items-center justify-center rounded-lg px-4   ${className}`} style={style} onClick={onClick} disabled={disabled} > {children} </button>
         </>
     )
 }

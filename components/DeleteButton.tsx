@@ -1,11 +1,7 @@
-
-
-
 import { deletePost } from "@/functions";
 import { RootState } from "@/store";
 import { togleChange } from "@/store/slice/changeSlice";
-import { openModal } from "@/store/slice/modalSlice";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -20,7 +16,7 @@ export default function DeleteButton({ post, postId, postUserId }) {
     }
     return (
         <>
-            {authUser?.uid === postUserId && <div onClick={deleteAPost} className="absolute top-0 right-0 z-20 cursor-pointer" > <RiDeleteBinLine size={23} /> </div>}
+            {authUser?.uid === postUserId && <div onClick={deleteAPost} className="absolute top-0 right-0 z-[11] cursor-pointer" > <RiDeleteBinLine size={23} /> </div>}
         </>
     )
 }

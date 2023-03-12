@@ -16,7 +16,6 @@ import {
 import { ref, getStorage, deleteObject } from "firebase/storage";
 
 const state = store.getState();
-const authUser = state.user.authUser;
 
 const postCollection = collection(dataBase, "posts");
 const userCollection = collection(dataBase, "users");
@@ -43,7 +42,6 @@ export const getAUserByUsername = async (username) => {
 };
 
 export const getOtherUsers = async (authUserId) => {
-  console.log(authUser?.uid);
   try {
     const users = query(userCollection, where("uid", "!=", authUserId || ""));
     const res = await getDocs(users);

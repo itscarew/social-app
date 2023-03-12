@@ -21,8 +21,12 @@ export default function CreatePostComponent() {
 
     const handleFileUpload = (event) => {
         const selectedFile = event.target.files[0];
-        const selectedFileUrl = URL.createObjectURL(selectedFile);
-        setPost({ ...post, picture: selectedFile, pictureUrl: selectedFileUrl });
+        if (selectedFile.size <= 1048576) {
+            const selectedFileUrl = URL.createObjectURL(selectedFile);
+            setPost({ ...post, picture: selectedFile, pictureUrl: selectedFileUrl });
+        } else {
+            alert("File to big, not more than 1mb")
+        }
     }
 
     const refreshPicture = () => {
@@ -53,22 +57,23 @@ export default function CreatePostComponent() {
     };
 
 
-    const creatPost = async () => {
-        const postId = await submitPost(post.text, post.picture);
+    const creatPost = async (e) => {
+        e.preventDefault()
+        await submitPost(post.text, post.picture);
         dispatch(closeModal())
     };
 
 
     return (
         <>
-            <div className="flex md:flex-row flex-col md:h-[30rem] h-auto " >
+            <form className="flex md:flex-row flex-col md:h-[30rem] h-auto " onSubmit={creatPost} >
                 {!post.pictureUrl &&
                     <div className="relative md:w-7/12 w-full md:h-auto h-[25rem]  flex flex-col items-center justify-center" >
                         <FcStackOfPhotos size={120} />
                         <p className="text-xl" >Bring your photos here</p>
                         <label className=' bg-dodger-blue-500 text-white py-2 px-8 mt-4 rounded-lg cursor-pointer'>
                             <span className="mt-2 text-base leading-normal">Lets see your computer</span>
-                            <input type='file' onChange={handleFileUpload} className="hidden" />
+                            <input type='file' name="file" value={post.pictureUrl} onChange={handleFileUpload} className="hidden" />
                         </label>
                     </div>
                 }
@@ -81,16 +86,10 @@ export default function CreatePostComponent() {
                     </div>
                 }
                 <div className="flex-1 p-4 w-full h-auto " >
-                    <div className="flex items-center text-base py-6 " >
-                        <div className="relative  rounded-full overflow-hidden w-12 h-12 mr-2" >
-                            <Image src={"/pic1.jpeg"} alt="#" fill style={{ objectFit: "cover" }} />
-                        </div>
-                        <p className="font-normal">@itsmeieijij</p>
-                    </div>
-                    <textarea onChange={handleChange} placeholder="Write a caption ...." className={`w-full h-56  outline-none rounded-lg p-2 border-b  border-gray-300 focus:outline-none  focus:border-gray-400 `} />
-                    <Button onClick={creatPost} className=' bg-dodger-blue-500 text-white py-2 px-16 mt-4' >Post</Button>
+                    <textarea onChange={handleChange} placeholder="Write a caption ...." className={`w-full h-[19rem]  outline-none rounded-lg p-2 border-b  border-gray-300 focus:outline-none  focus:border-gray-400 `} />
+                    <Button className={` bg-dodger-blue-500 text-white py-2 px-16 mt-4 ${!post.picture ? "opacity-60" : ""} `} disabled={!post.picture} >Post</Button>
                 </div>
-            </div>
+            </form>
         </>
     )
 }
