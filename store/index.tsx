@@ -6,6 +6,7 @@ import changeSlice from './slice/changeSlice';
 import modalSlice from './slice/modalSlice'
 
 
+
 const persistConfig = {
     key: 'root',
     storage,
@@ -15,7 +16,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
     user: authSlice,
     modal: modalSlice,
-    change: changeSlice
+    change: changeSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
